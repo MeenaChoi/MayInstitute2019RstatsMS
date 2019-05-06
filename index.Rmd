@@ -10,8 +10,8 @@ link-citations: yes
 
 # Before we start {-}
 
-- need to change : Download the data files here: https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.zip
-- need to change : A pdf version of the course is available here: https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.pdf
+- need to change : Download the data files here: https://drive.google.com/file/d/1buDYh8UA0z_5MKzoG8QhQTr9hY4XA_N-/view?usp=sharing
+
 
 ## Suggested reading {-}
 
