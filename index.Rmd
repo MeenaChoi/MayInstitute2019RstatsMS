@@ -10,7 +10,7 @@ link-citations: yes
 
 # Before we start {-}
 
-- need to change : Download the data files here: https://drive.google.com/file/d/1buDYh8UA0z_5MKzoG8QhQTr9hY4XA_N-/view?usp=sharing
+- Download the data files here: https://drive.google.com/file/d/1buDYh8UA0z_5MKzoG8QhQTr9hY4XA_N-/view?usp=sharing
 
 
 ## Suggested reading {-}
