@@ -1,0 +1,77 @@
+---
+title: "May Institute 2019: Statistics for quantitative mass spsectrometry"
+author: "Meena Choi and Ting Huang"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+---
+
+# Before we start {-}
+
+- need to change : Download the data files here: https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.zip
+- need to change : A pdf version of the course is available here: https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.pdf
+
+## Suggested reading {-}
+
+* [Points of Significance : Statistics for Biologists](https://www.nature.com/collections/qghhqm/pointsofsignificance)
+* [Susan Holmes and Wolfgang Huber, Modern Statistics for Modern Biology. Cambridge University Press, 2019](https://www.huber.embl.de/msmb/introduction.html)
+
+## Schedule {-}
+
+
+| Day | Time            | Content                                                                                            |
+|-----|-----------------|----------------------------------------------------------------------------------------------------|
+| 1   | 9:00 - 10:30am   | Keynote : Introduction and  [`MSstats`](https://bioconductor.org/packages/release/bioc/html/MSstats.html) (OV)                                                           |
+|     | 10:30 - 11:00am   | Refreshments                                                                                     |
+|     | 11:00 - 12:30pm   | MSstats-Introduction to data and preprocessing (MC)                                              |
+|     | 12:30 - 1:30pm | Lunch break                                                                                         |
+|     | 1:30 - 3:00pm  | MSstats-Normalization, summarization, and missing value (MC)                                        |
+|     | 3:00 - 3:30pm   | Refreshments                                                                                       |
+|     | 3:30 - 5:00pm   | MSstats-Differential abundance and visualization (MC)                                              |
+| 2   | 9:00 - 10:30am  | Lecture: Multiple testing, limma, [`MSstatsTMT`](https://bioconductor.org/packages/release/bioc/html/MSstatsTMT.html), Unsupervised and supervised classification (OV)                                                                              |
+|     | 10:30 - 11:00am | Refreshments                                                                                       |
+|     | 11:00 - 12:30pm | MSstatsTMT-Introduction to data and preprocessing (TH)                                             |
+|     | 12:30 - 13:30pm | Lunch break                                                                                        |
+|     | 13:30 - 3:00pm  | MSstatsTMT-Summarization, normalization and group comparison (TH)                                  |
+|     | 3:00 - 3:30pm   | Refreshments                                                                                       |
+|     | 3:30 - 5:00pm   | Classification (TH)                                                                                |
+| 3   | 9:00 - 10:30am  | Keynote (NB)
+                              |
+|     | 10:30 - 11:00am | Refreshments                                                                                       |
+|     | 11:00 - 12:30pm | MassIVE and MassIVE.quant (NB)                  
+                              |
+|     | 12:30 - 13:30pm | Wrap-up                                                                                            |
+
+
+Meena Choi (MC), Ting Huang (TH), Olga Vitek (OV), Nuno Bandeira (NB)
+
+
+## License {-}
+
+
+This material, unless otherwise stated, is made available under the
+[Creative Commons Attribution
+license](https://creativecommons.org/licenses/by/4.0/).
+
+You are free to:
+
+* **Share** - copy and redistribute the material in any medium or format
+* **Adapt** - remix, transform, and build upon the material for any
+  purpose, even commercially.
+
+The licensor cannot revoke these freedoms as long as you follow the license terms.
+
+Under the following terms:
+
+* **Attribution** - You must give appropriate credit, provide a link
+  to the license, and indicate if changes were made. You may do so in
+  any reasonable manner, but not in any way that suggests the licensor
+  endorses you or your use.
+
+No additional restrictions - You may not apply legal terms or
+technological measures that legally restrict others from doing
+anything the license permits.
+
+

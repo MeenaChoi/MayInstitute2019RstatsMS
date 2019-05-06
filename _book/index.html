@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>May Institute 2019: Statistics for quantitative mass spsectrometry</title>
+  <meta name="description" content="May Institute 2019: Statistics for quantitative mass spsectrometry">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  
+  
+  
+
+<meta name="author" content="Meena Choi and Ting Huang">
+
+
+<meta name="date" content="2019-05-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Before we start</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#suggested-reading"><i class="fa fa-check"></i>Suggested reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><i class="fa fa-check"></i><b>1</b> Day 1 - Section 1 : MSstats, introduction to data and preprocessing</a><ul>
+<li class="chapter" data-level="1.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#objective"><i class="fa fa-check"></i><b>1.1</b> Objective</a></li>
+<li class="chapter" data-level="1.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#workflow-in-msstats"><i class="fa fa-check"></i><b>1.2</b> Workflow in MSstats</a></li>
+<li class="chapter" data-level="1.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#data"><i class="fa fa-check"></i><b>1.3</b> Data</a></li>
+<li class="chapter" data-level="1.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#load-msstats"><i class="fa fa-check"></i><b>1.4</b> Load MSstats</a></li>
+<li class="chapter" data-level="1.5" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#allowable-data-formats"><i class="fa fa-check"></i><b>1.5</b> Allowable data formats</a></li>
+<li class="chapter" data-level="1.6" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#convert-to-msstats-required-format-data-cleaning"><i class="fa fa-check"></i><b>1.6</b> Convert to MSstats required format (Data cleaning)</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#skyline-output"><i class="fa fa-check"></i><b>1.6.1</b> 1.6.1 Skyline output</a></li>
+<li class="chapter" data-level="1.6.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#maxquant-output"><i class="fa fa-check"></i><b>1.6.2</b> 1.6.2 MaxQuant output</a></li>
+<li class="chapter" data-level="1.6.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#openms-output"><i class="fa fa-check"></i><b>1.6.3</b> 1.6.3 OpenMS output</a></li>
+<li class="chapter" data-level="1.6.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#progenesis-output"><i class="fa fa-check"></i><b>1.6.4</b> 1.6.4 Progenesis output</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#save-your-work"><i class="fa fa-check"></i><b>1.7</b> Save your work</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><i class="fa fa-check"></i><b>2</b> Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization</a><ul>
+<li class="chapter" data-level="2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#data-1"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-skyline-data"><i class="fa fa-check"></i><b>2.2</b> dataProcess with Skyline data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-msstats-1"><i class="fa fa-check"></i><b>2.2.1</b> Load MSstats</a></li>
+<li class="chapter" data-level="2.2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-the-pre-processed-data-of-skyline-output"><i class="fa fa-check"></i><b>2.2.2</b> Load the pre-processed data of Skyline output</a></li>
+<li class="chapter" data-level="2.2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#normalizing-and-summarizing-data-with-dataprocess"><i class="fa fa-check"></i><b>2.2.3</b> Normalizing and summarizing data with dataProcess</a></li>
+<li class="chapter" data-level="2.2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#visualization-of-processed-data"><i class="fa fa-check"></i><b>2.2.4</b> Visualization of processed data</a></li>
+<li class="chapter" data-level="2.2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-normalization-option"><i class="fa fa-check"></i><b>2.2.5</b> Different normalization option</a></li>
+<li class="chapter" data-level="2.2.6" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-summarization-option"><i class="fa fa-check"></i><b>2.2.6</b> Different summarization option</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-maxquant-data"><i class="fa fa-check"></i><b>2.3</b> dataProcess with MaxQuant data</a></li>
+<li class="chapter" data-level="2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-openms-data"><i class="fa fa-check"></i><b>2.4</b> dataProcess with OpenMS data</a></li>
+<li class="chapter" data-level="2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-progenesis-data"><i class="fa fa-check"></i><b>2.5</b> dataProcess with Progenesis data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><i class="fa fa-check"></i><b>3</b> Day 1 - Section 3 : MSstats, Differential abundance and sample size calculation</a><ul>
+<li class="chapter" data-level="3.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#summary"><i class="fa fa-check"></i><b>3.1</b> Summary</a></li>
+<li class="chapter" data-level="3.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#data-2"><i class="fa fa-check"></i><b>3.2</b> Data</a></li>
+<li class="chapter" data-level="3.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-msstats-2"><i class="fa fa-check"></i><b>3.3</b> Load MSstats</a></li>
+<li class="chapter" data-level="3.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output"><i class="fa fa-check"></i><b>3.4</b> Inference and future design of experiment with Skyline output</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-the-processed-data-output-of-dataprocess-of-skyline-output"><i class="fa fa-check"></i><b>3.4.1</b> Load the processed data (output of <code>dataProcess</code>) of Skyline output</a></li>
+<li class="chapter" data-level="3.4.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#finding-differentially-abundant-proteins-across-conditions"><i class="fa fa-check"></i><b>3.4.2</b> Finding differentially abundant proteins across conditions</a></li>
+<li class="chapter" data-level="3.4.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#visualization-of-differentially-abundant-proteins"><i class="fa fa-check"></i><b>3.4.3</b> Visualization of differentially abundant proteins</a></li>
+<li class="chapter" data-level="3.4.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#planning-future-experimental-designs"><i class="fa fa-check"></i><b>3.4.4</b> Planning future experimental designs</a></li>
+<li class="chapter" data-level="3.4.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#protein-subject-quantification"><i class="fa fa-check"></i><b>3.4.5</b> Protein subject quantification</a></li>
+<li class="chapter" data-level="3.4.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#msstats.log-and-sessioninfo.txt"><i class="fa fa-check"></i><b>3.4.6</b> msstats.log and sessionInfo.txt</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">May Institute 2019: Statistics for quantitative mass spsectrometry</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">May Institute 2019: Statistics for quantitative mass spsectrometry</h1>
+<p class="author"><em>Meena Choi and Ting Huang</em></p>
+<p class="date"><em>2019-05-05</em></p>
+</div>
+<div id="before-we-start" class="section level1 unnumbered">
+<h1>Before we start</h1>
+<ul>
+<li>need to change : Download the data files here: <a href="https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.zip" class="uri">https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.zip</a></li>
+<li>need to change : A pdf version of the course is available here: <a href="https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.pdf" class="uri">https://lgatto.github.io/MayInstituteRstatsIntro/RIntro.pdf</a></li>
+</ul>
+<div id="suggested-reading" class="section level2 unnumbered">
+<h2>Suggested reading</h2>
+<ul>
+<li><a href="https://www.nature.com/collections/qghhqm/pointsofsignificance">Points of Significance : Statistics for Biologists</a></li>
+<li><a href="https://www.huber.embl.de/msmb/introduction.html">Susan Holmes and Wolfgang Huber, Modern Statistics for Modern Biology. Cambridge University Press, 2019</a></li>
+</ul>
+</div>
+<div id="schedule" class="section level2 unnumbered">
+<h2>Schedule</h2>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="13%" />
+<col width="81%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Time</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>9:00 - 10:30am</td>
+<td>Keynote : Introduction and <a href="https://bioconductor.org/packages/release/bioc/html/MSstats.html"><code>MSstats</code></a> (OV)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>10:30 - 11:00am</td>
+<td>Refreshments</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>11:00 - 12:30pm</td>
+<td>MSstats-Introduction to data and preprocessing (MC)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>12:30 - 1:30pm</td>
+<td>Lunch break</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>1:30 - 3:00pm</td>
+<td>MSstats-Normalization, summarization, and missing value (MC)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>3:00 - 3:30pm</td>
+<td>Refreshments</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3:30 - 5:00pm</td>
+<td>MSstats-Differential abundance and visualization (MC)</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>9:00 - 10:30am</td>
+<td>Lecture: Multiple testing, limma, <a href="https://bioconductor.org/packages/release/bioc/html/MSstatsTMT.html"><code>MSstatsTMT</code></a>, Unsupervised and supervised classification (OV)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>10:30 - 11:00am</td>
+<td>Refreshments</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>11:00 - 12:30pm</td>
+<td>MSstatsTMT-Introduction to data and preprocessing (TH)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>12:30 - 13:30pm</td>
+<td>Lunch break</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>13:30 - 3:00pm</td>
+<td>MSstatsTMT-Summarization, normalization and group comparison (TH)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3:00 - 3:30pm</td>
+<td>Refreshments</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>3:30 - 5:00pm</td>
+<td>Classification (TH)</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>9:00 - 10:30am</td>
+<td>Keynote (NB)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>10:30 - 11:00am</td>
+<td>Refreshments</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>11:00 - 12:30pm</td>
+<td>MassIVE and MassIVE.quant (NB)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>12:30 - 13:30pm</td>
+<td>Wrap-up</td>
+</tr>
+</tbody>
+</table>
+<p>Meena Choi (MC), Ting Huang (TH), Olga Vitek (OV), Nuno Bandeira (NB)</p>
+</div>
+<div id="license" class="section level2 unnumbered">
+<h2>License</h2>
+<p>This material, unless otherwise stated, is made available under the
+<a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution
+license</a>.</p>
+<p>You are free to:</p>
+<ul>
+<li><strong>Share</strong> - copy and redistribute the material in any medium or format</li>
+<li><strong>Adapt</strong> - remix, transform, and build upon the material for any
+purpose, even commercially.</li>
+</ul>
+<p>The licensor cannot revoke these freedoms as long as you follow the license terms.</p>
+<p>Under the following terms:</p>
+<ul>
+<li><strong>Attribution</strong> - You must give appropriate credit, provide a link
+to the license, and indicate if changes were made. You may do so in
+any reasonable manner, but not in any way that suggests the licensor
+endorses you or your use.</li>
+</ul>
+<p>No additional restrictions - You may not apply legal terms or
+technological measures that legally restrict others from doing
+anything the license permits.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

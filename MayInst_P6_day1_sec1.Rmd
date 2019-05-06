@@ -1,0 +1,426 @@
+# Day 1 - Section 1 : MSstats, introduction to data and preprocessing
+
+## Objective
+
+- Preprocessing steps to make required input format for MSstats from output from diverse output of spectral processing tools.
+- Make annotation file, based on experimental design.
+
+
+***
+
+## Workflow in MSstats
+
+![](img/MSstats_intro1.png)
+
+![](img/MSstats_intro2.png)
+![](img/MSstats_intro3.png)
+
+***
+
+
+## Data
+- the quantified peak intensities data from ABRF 2015, processed by Skyline.
+
+![Summary of the ABRF 2015 study design, Choi, et al. J Proteome Res. 2017](img/Protein_sample_information.png){width=70%}
+
+
+***
+
+## Load MSstats
+
+Load MSstats first. Then you are ready to start MSstats. 
+
+```{r, eval=F, echo=T, warning=F}
+library(MSstats)
+?MSstats
+```
+
+```{r, eval=T, echo=F, warning=F}
+#library(MSstats, warn.conflicts = F, quietly = T, verbose = F)
+library(MSstats)
+
+?MSstats
+```
+
+
+***
+
+## Allowable data formats
+
+`MSstats` performs statistical analysis steps, that follow peak identification and quantitation. Therefore, input
+to MSstats is the output of other software tools (such as `Skyline`, `MaxQuant` and so on) that read raw spectral files
+, identify and quantify spectral peaks. The preferred structure of data for use in MSstats is a .csv file
+in a *long* format with at least 10 columns representing the following variables: **ProteinName**, **PeptideSequence**, **PrecursorCharge**, **FragmentIon**, **ProductCharge**, **IsotopeLabelType**, **Condition**, **BioReplicate**, **Run**, **Intensity**. The variable names are fixed, but are case-insensitive.
+
+```{r, eval=T, echo=F, warning=F}
+head(DDARawData)
+```
+
+***
+
+## Convert to MSstats required format (Data cleaning)
+
+***
+Let's start preprocessing steps to make required input format for MSstats from output from diverse output of spectral processing tools.
+
+![](img/MSstats_intro4.png)
+
+- Data input support for various data acquisition methods : DDA, DIA, SRM
+
+- Interoperability with existing computational tools :
+      - Converter functions for 7 data processin tools : 
+      `SkylinetoMSstatsFormat`, `MaxQtoMSstatsFormat`, `OpenMStoMSstatsFormat`, `ProgenesistoMSstatsFormat`, `PDtoMSstatsFormat`, `SpectronauttoMSstatsFormat`, `OpenSWATHtoMSstatsFormat`, `DIAUmpiretoMSstatsFormat`
+      - Consistent data cleaning steps across converter functions : filter multiple measurements, shared peptides, etc.
+      - Generate the same format of data from diverse type of data format.
+
+
+### Skyline output
+
+#### Read data
+
+The required input data is generated automatically when using `MSstats` report format in `Skyline`.
+We first load and access the dataset processed by `Skyline`. The name of saved file from `Skyline` using `MSstats report format` is *'ABRF2015_Skyline_report.csv'*. or you can use the published data from this link (https://panoramaweb.org/labkey/project/MacCoss/brendan/manuscripts/iPRG%202015/begin.view). This example dataset is the exactly same data in 'iPRG_10ppm_2rt_15cut_nosingle.csv' from the link above.
+
+
+```{r}
+# Read output from skyline 
+raw.skyline <- read.csv(file="data/data_Skyline/ABRF2015_Skyline_report.csv")
+```
+
+```{r}
+# Check the first 6 rows of dataset
+head(raw.skyline)
+```
+
+There are some column named differently than required input. The information for `Condition` and `BioReplicate` is missing. Let's do preliminary check for this input.
+
+```{r}
+# total number of unique protein name
+length(unique(raw.skyline$Protein))
+
+# several isotopic peaks for peptide charge
+unique(raw.skyline$FragmentIon)
+
+# unique FileName, which is MS run.
+unique(raw.skyline$FileName)
+
+# 'Truncated' column
+unique(raw.skyline$Truncated)
+
+# count table for 'Truncated' column
+xtabs(~Truncated, raw.skyline)
+
+# count which 'Truncated' is 'True'
+sum(raw.skyline$Truncated == 'True')
+```
+
+
+#### Set annotation file
+
+Annotation information is required to fill in **Condition** and **BioReplicate** for corresponding **Run** information. Users have to prepare as csv or txt file like 'ABRF2015_Skyline_annotation.csv', which includes **Run**, **Condition**, and **BioReplicate** information, and load it in R.
+
+```{r}
+annot.skyline <- read.csv(file="data/data_Skyline/ABRF2015_Skyline_annotation.csv")
+annot.skyline
+```
+
+
+##### Common mistake for annotation file : Incorrect Run information
+
+Raw file name in the output of spectral processing tool is commonly long. We can make a typo in annotation file. If Raw file name and Run information are not matched, 
+
+Let's check whether **Run** information is same as **File.Name** in output of `Skyline`.
+
+```{r}
+setdiff(unique(raw.skyline$FileName), annot.skyline$Run)
+setdiff(annot.skyline$Run, unique(raw.skyline$FileName))
+```
+There is no issue in this annotation. 
+
+Let's try the example with unmatched information.
+
+```{r}
+annot.wrong <- read.csv(file="data/data_Skyline/ABRF2015_Skyline_annotation_wrong_example.csv")
+annot.wrong
+```
+
+**Note!** small details : hyphen vs underline.
+
+##### Common mistake for annotation file : Incorrect `BioReplicate` information
+
+`MSstats` distinguish the design of experiment as group comparison, time course, paired design, with the combination of `Condition`, `BioReplicate`, and `Run`.
+
+
+###### Group comparison 
+![](img/expdesign_group.png){width=40%}
+
+In a group comparison design, the conditions (e.g., disease states) are profiled across **non-overlapping sets of biological replicates (i.e., subjects)**. In this example there are 2 conditions, Disease and Control (in general the number of conditions can vary). There are 3 subjects (i.e., biological replicates) per condition (in general an equal number of replicates per condition is not required). Overall, in this example there are 2 × 3 = 6 mass spectrometry runs.
+
+The most important is that 1) subject IDs for disease group are completely different thatn subject IDs for control group 2) `Run` is not order of spectral acquisition, but just unique MS run ID.
+
+![](img/expdesign_group_tech.png)
+
+
+In addition, if each subject has e technical replicate runs (in general technical replicates are not required, and their number per sample may vary). there are 2 × 3 × 3 = 18 mass spectrometry runs.
+
+###### Time course
+
+The important feature of a time course experimental design is that **a same subject (i.e., biological replicate) is repetitively measured across multiple time points**. In this example there are 3 time points, Time1, Time2, and Time3 (in general the number of times can vary). There are 3 subjects (i.e., biological replicates) measured across times (in general an equal number of times per replicate is not required). There are no technical replicates (in general the number of technical replicates per sample may vary). Overall, in this example there are 3 × 3 = 9 mass spectrometry runs.
+
+![](img/expdesign_time.png){width=60%}
+
+###### Paired design
+
+Another frequently used experimental design is a *paired design*, where measurements from **multiple conditions (such as healthy biopsy and disease biopsy) are taken from a same subject**. The statistical model for this experimental design is the same as in the time course experiment, however the values in the columns of the input data may have a different appearence. In this example there are 3 subjects (in general the number of patients can vary). There are three  conditions per subject (in general the number of conditions per subject can exceed two). Overall, in this example there are $2  \times 3 = 6$ mass spectrometry runs. `BioReplicate` should indicate each individual ID.
+
+![](img/expdesign_pair.png){width=60%}
+
+#### Preprocessing with `SkylinetoMSstatsFormat`
+
+The input data for `MSstats` is required to contain variables of **ProteinName**, **PeptideSequence**, **PrecursorCharge**, **FragmentIon**, **ProductCharge**, **IsotopeLabelType**, **Condition**, **BioReplicate**, **Run**, **Intensity**. These variable names should be fixed. `MSstats` input from Skyline adapts the column scheme of the dataset so that it fits `MSstats` input format. However there are several extra column names and also some of them need to be changed.  `SkylinetoMSstatsFormat` function helps pre-processing for making right format of MSstats input from Skyline output. For example, it renames some column name, and replace truncated peak intensities with NA. Another important step is to handle isotopic peaks before using `dataProcess`. The output from Skyline for DDA experiment has several measurements of peak area from the monoisotopic, M+1 and M+2 peaks. To get a robust measure of peptide intensity, we can sum over isotopic peaks per peptide or use the highest peak. Here we take a summation per peptide ion.
+
+Here is the summary of pre-processing steps in `SkylinetoMSstatsFormat` function (in orange box below).
+
+![](img/MSstats_Skyline.png)
+
+
+For further details, visit the help file using the following code.
+```{r, eval=F}
+?SkylinetoMSstatsFormat
+```
+
+
+```{r}
+# reformating and pre-processing for Skyline output.
+input.skyline <- SkylinetoMSstatsFormat(raw.skyline, 
+                                        annotation=annot.skyline,
+                                        removeProtein_with1Feature = TRUE)
+head(input.skyline)
+```
+
+#### Preliminary check
+
+```{r}
+length(unique(input.skyline$ProteinName)) 
+sum(is.na(input.skyline$Intensity)) 
+sum(!is.na(input.skyline$Intensity) & input.skyline$Intensity==0)
+```
+
+
+***
+
+### MaxQuant output
+
+#### Read data
+
+Three files should be prepared before MSstats. Two files, ‘proteinGroups.txt’ and ‘evidence.txt’ are outputs
+from MaxQuant.
+
+```{r}
+# First, get protein ID information
+proteinGroups <- read.table("data/data_MaxQuant/proteinGroups.txt", sep = "\t", header = TRUE)
+```
+
+```{r}
+# Read in MaxQuant file: evidence.txt
+evi <- read.table("data/data_MaxQuant/evidence.txt", sep="\t", header=TRUE)
+colnames(evi)
+unique(evi$Raw.file)
+```
+
+One file is for annotation information, required to fill in Condition and BioReplicate for corresponding Run information. Users have to prepare as csv or txt file like ‘ABRF2015_MaxQuant_annotation.csv’, which includes **Run**, **Condition**, and **BioReplicate** information, and load it in R.
+
+
+#### Set annotation file
+
+Annotation information is required to fill in **Condition** and **BioReplicate** for corresponding **Raw.file** information. Users have to prepare as csv or txt file like 'ABRF2015_MaxQuant_annotation.csv', which includes **Raw.file**, **Condition**, and **BioReplicate** information, and load it in R. **Raw.file** column in the annotation file should be the same as unique **Raw.file** in evidence.txt file.
+
+```{r}
+# Read in annotation including condition and biological replicates: annotation.csv
+annot.maxquant <- read.csv("data/data_MaxQuant/ABRF2015_MaxQuant_annotation.csv", header = TRUE)
+annot.maxquant
+```
+
+
+#### Preprocessing with `MaxQtoMSstatsFormat`
+
+`MaxQtoMSstatsFormat` function helps pre-processing for making right format of MSstats input from MaxQuant output. Basically, this function gets peptide ion intensity from `‘evidence.txt’` file. In addition, there are several steps to filter out or to modify the data in order to get required information.
+
+Here is the summary of pre-processing steps in `MaxQtoMSstatsFormat` function (in orange box below).
+
+![](img/MSstats_MaxQ.png)
+
+```{r, eval=F}
+?MaxQtoMSstatsFormat
+```
+
+```{r}
+# reformating and pre-processing for MaxQuant output.
+# no protein with 1 peptide
+input.maxquant <- MaxQtoMSstatsFormat(evidence=evi, 
+                                      annotation=annot.maxquant,
+                                      proteinGroups=proteinGroups,
+                                      removeProtein_with1Peptide=TRUE)
+head(input.maxquant)
+```
+
+
+#### Preliminary check
+
+```{r}
+length(unique(input.maxquant$ProteinName)) 
+sum(is.na(input.maxquant$Intensity)) 
+sum(!is.na(input.maxquant$Intensity) & input.maxquant$Intensity==0)
+```
+
+> Challenge
+> 
+> * Let's check unique information for `Run`,`BioReplicate` and `Condition` in `input.maxquant`.
+
+```{r}
+unique(input.maxquant[, c('Run', 'BioReplicate', 'Condition')])
+```
+
+
+***
+
+### OpenMS output
+
+#### Read data
+
+```{r}
+# First, read output of OpenMS
+raw.openMS <- read.csv("data/data_OpenMS/ABRF2015_OpenMS_raw.csv", stringsAsFactors=F) # the data file
+head(raw.openMS)
+```
+
+
+#### Set annotation file
+
+The output from `OpenMS` already includes `Run`, `BioReplicate`, `Condition` information. Let's check it.
+
+```{r}
+unique(raw.openMS[, c('Run', 'BioReplicate', 'Condition')])
+```
+
+#### Preprocessing with `OpenMStoMSstatsFormat`
+
+There are several steps to filter out or to modify the data in order to get required information.
+Here is the summary of pre-processing steps in `OpenMStoMSstatsFormat` function.
+
+![](img/MSstats_OpenMS.png)
+
+```{r, eval=F}
+?OpenMStoMSstatsFormat
+```
+
+```{r}
+# reformating and pre-processing for OpenMS output.
+input.openms <- OpenMStoMSstatsFormat(raw.openMS,
+                                      removeProtein_with1Feature=TRUE)
+
+## now 'input.openms' is ready for MSstats
+head(input.openms)
+```
+
+
+#### Preliminary check for preprocessed data
+
+```{r}
+length(unique(input.openms$ProteinName)) 
+sum(is.na(input.openms$Intensity)) 
+sum(!is.na(input.openms$Intensity) & input.openms$Intensity==0)
+table(input.openms$Run)
+```
+
+> Challenge
+> 
+> * Let's check unique information for `Run`,`BioReplicate` and `Condition`.
+
+```{r}
+unique(input.openms[, c('Run', 'BioReplicate', 'Condition')]) 
+```
+
+***
+
+### Progenesis output
+
+#### Read data
+
+```{r}
+# First, read output of Progenesis
+raw.progenesis <- read.csv("data/data_Progenesis/ABRF2015_Progenesis_raw.csv", stringsAsFactors=F) # the data file
+head(raw.progenesis)
+```
+
+One file is for annotation information, required to fill in Condition and BioReplicate for corresponding Run information. Users have to prepare as csv or txt file like ‘ABRF2015_Progenesis_annotation.csv’, which includes **Run**, **Condition**, and **BioReplicate** information, and load it in R.
+
+#### Set annotation file
+
+Annotation information is required to fill in **Condition** and **BioReplicate** for corresponding **Run** information. Users have to prepare as csv or txt file like 'ABRF2015_Progenesis_annotation.csv', which includes **Run**, **Condition**, and **BioReplicate** information, and load it in R.
+
+```{r}
+## Read in annotation including condition and biological replicates: ABRF2015_Progenesis_annotation.csv
+annot.progenesis <- read.csv("data/data_Progenesis/ABRF2015_Progenesis_annotation.csv", header = TRUE)
+annot.progenesis
+```
+!! `Run` information should be the same as annotated in output of `Progenesis`.
+
+
+#### Preprocessing with `ProgenesistoMSstatsFormat`
+
+The output from `Progenesis` includes peptide ion-level quantification for each MS runs. `ProgenesistoMSstatsFormat` function helps pre-processing for making right format of `MSstats` input from `Progenesis` output. Basically, this function reformats wide format to long format. It provide **Raw.abundance**, **Normalized.abundance** and **Spectral count** columns. This converter uses **Raw.abundance** columns for Intensity values. In addition, there are several steps to filter out or to modify the data in order to get required information.
+Here is the summary of pre-processing steps in `ProgenesistoMSstatsFormat` function (in orange box below).
+
+![](img/MSstats_progenesis.png)
+
+```{r, eval=F}
+?ProgenesistoMSstatsFormat
+```
+
+```{r}
+# reformating and pre-processing for Progenesis output.
+input.progenesis <- ProgenesistoMSstatsFormat(raw.progenesis, 
+                                              annotation=annot.progenesis,
+                                              removeProtein_with1Peptide=TRUE)
+
+## now 'input.progenesis' is ready for MSstats
+head(input.progenesis)
+```
+
+
+#### Preliminary check for preprocessed data
+
+```{r}
+length(unique(input.progenesis$ProteinName)) 
+sum(is.na(input.progenesis$Intensity)) 
+sum(!is.na(input.progenesis$Intensity) & input.progenesis$Intensity==0)
+table(input.progenesis$Run)
+```
+
+> Challenge
+> 
+> * Let's check unique information for `Run`,`BioReplicate` and `Condition`.
+
+```{r}
+unique(input.progenesis[, c('Run', 'BioReplicate', 'Condition')]) 
+```
+
+***
+
+
+## Save your work
+
+We can save the data that we made so far.
+
+```{r}
+save(input.skyline, file='data/data_Skyline/input.skyline.rda')
+save(input.maxquant, file='data/data_MaxQuant/input.maxquant.rda')
+save(input.openms, file='data/data_OpenMS/input.openms.rda')
+save(input.progenesis, file='data/data_Progenesis/input.progenesis.rda')
+
+```
+
+
+
+

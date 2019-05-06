@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 2 Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization | May Institute 2019: Statistics for quantitative mass spsectrometry</title>
+  <meta name="description" content="Chapter 2 Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization | May Institute 2019: Statistics for quantitative mass spsectrometry">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 2 Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization | May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization | May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  
+  
+  
+
+<meta name="author" content="Meena Choi and Ting Huang">
+
+
+<meta name="date" content="2019-05-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html">
+<link rel="next" href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Before we start</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#suggested-reading"><i class="fa fa-check"></i>Suggested reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><i class="fa fa-check"></i><b>1</b> Day 1 - Section 1 : MSstats, introduction to data and preprocessing</a><ul>
+<li class="chapter" data-level="1.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#objective"><i class="fa fa-check"></i><b>1.1</b> Objective</a></li>
+<li class="chapter" data-level="1.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#workflow-in-msstats"><i class="fa fa-check"></i><b>1.2</b> Workflow in MSstats</a></li>
+<li class="chapter" data-level="1.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#data"><i class="fa fa-check"></i><b>1.3</b> Data</a></li>
+<li class="chapter" data-level="1.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#load-msstats"><i class="fa fa-check"></i><b>1.4</b> Load MSstats</a></li>
+<li class="chapter" data-level="1.5" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#allowable-data-formats"><i class="fa fa-check"></i><b>1.5</b> Allowable data formats</a></li>
+<li class="chapter" data-level="1.6" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#convert-to-msstats-required-format-data-cleaning"><i class="fa fa-check"></i><b>1.6</b> Convert to MSstats required format (Data cleaning)</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#skyline-output"><i class="fa fa-check"></i><b>1.6.1</b> Skyline output</a></li>
+<li class="chapter" data-level="1.6.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#maxquant-output"><i class="fa fa-check"></i><b>1.6.2</b> MaxQuant output</a></li>
+<li class="chapter" data-level="1.6.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#openms-output"><i class="fa fa-check"></i><b>1.6.3</b> OpenMS output</a></li>
+<li class="chapter" data-level="1.6.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#progenesis-output"><i class="fa fa-check"></i><b>1.6.4</b> Progenesis output</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#save-your-work"><i class="fa fa-check"></i><b>1.7</b> Save your work</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><i class="fa fa-check"></i><b>2</b> Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization</a><ul>
+<li class="chapter" data-level="2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#data-1"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-skyline-data"><i class="fa fa-check"></i><b>2.2</b> dataProcess with Skyline data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-msstats-1"><i class="fa fa-check"></i><b>2.2.1</b> Load MSstats</a></li>
+<li class="chapter" data-level="2.2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-the-pre-processed-data-of-skyline-output"><i class="fa fa-check"></i><b>2.2.2</b> Load the pre-processed data of Skyline output</a></li>
+<li class="chapter" data-level="2.2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#normalizing-and-summarizing-data-with-dataprocess"><i class="fa fa-check"></i><b>2.2.3</b> Normalizing and summarizing data with dataProcess</a></li>
+<li class="chapter" data-level="2.2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#visualization-of-processed-data"><i class="fa fa-check"></i><b>2.2.4</b> Visualization of processed data</a></li>
+<li class="chapter" data-level="2.2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-normalization-option"><i class="fa fa-check"></i><b>2.2.5</b> Different normalization option</a></li>
+<li class="chapter" data-level="2.2.6" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-summarization-option"><i class="fa fa-check"></i><b>2.2.6</b> Different summarization option</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-maxquant-data"><i class="fa fa-check"></i><b>2.3</b> dataProcess with MaxQuant data</a></li>
+<li class="chapter" data-level="2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-openms-data"><i class="fa fa-check"></i><b>2.4</b> dataProcess with OpenMS data</a></li>
+<li class="chapter" data-level="2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-progenesis-data"><i class="fa fa-check"></i><b>2.5</b> dataProcess with Progenesis data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><i class="fa fa-check"></i><b>3</b> Day 1 - Section 3 : MSstats, Differential abundance and sample size calculation</a><ul>
+<li class="chapter" data-level="3.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#summary"><i class="fa fa-check"></i><b>3.1</b> Summary</a></li>
+<li class="chapter" data-level="3.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#data-2"><i class="fa fa-check"></i><b>3.2</b> Data</a></li>
+<li class="chapter" data-level="3.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-msstats-2"><i class="fa fa-check"></i><b>3.3</b> Load MSstats</a></li>
+<li class="chapter" data-level="3.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output"><i class="fa fa-check"></i><b>3.4</b> Inference and future design of experiment with Skyline output</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-the-processed-data-output-of-dataprocess-of-skyline-output"><i class="fa fa-check"></i><b>3.4.1</b> Load the processed data (output of <code>dataProcess</code>) of Skyline output</a></li>
+<li class="chapter" data-level="3.4.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#finding-differentially-abundant-proteins-across-conditions"><i class="fa fa-check"></i><b>3.4.2</b> Finding differentially abundant proteins across conditions</a></li>
+<li class="chapter" data-level="3.4.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#visualization-of-differentially-abundant-proteins"><i class="fa fa-check"></i><b>3.4.3</b> Visualization of differentially abundant proteins</a></li>
+<li class="chapter" data-level="3.4.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#planning-future-experimental-designs"><i class="fa fa-check"></i><b>3.4.4</b> Planning future experimental designs</a></li>
+<li class="chapter" data-level="3.4.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#protein-subject-quantification"><i class="fa fa-check"></i><b>3.4.5</b> Protein subject quantification</a></li>
+<li class="chapter" data-level="3.4.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#msstats.log-and-sessioninfo.txt"><i class="fa fa-check"></i><b>3.4.6</b> msstats.log and sessionInfo.txt</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output-1"><i class="fa fa-check"></i><b>3.5</b> Inference and future design of experiment with Skyline output</a></li>
+<li class="chapter" data-level="3.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-openms-output"><i class="fa fa-check"></i><b>3.6</b> Inference and future design of experiment with OpenMS output</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">May Institute 2019: Statistics for quantitative mass spsectrometry</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="day-1---section-2-msstats-data-processing---normalization-and-run-summarization" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization</h1>
+<div id="data-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Data</h2>
+<ul>
+<li>The pre-processed data, <code>input.skyline.rda</code>, <code>input.maxquant.rda</code>, <code>input.openms.rda</code>, <code>input.progenesis.rda</code> from section 1.</li>
+</ul>
+<hr />
+</div>
+<div id="dataprocess-with-skyline-data" class="section level2">
+<h2><span class="header-section-number">2.2</span> dataProcess with Skyline data</h2>
+<p>Let’s start processing steps. It includes log transformation of intensities, normalization and run-level summarization.</p>
+<p><img src="img/MSstats_dataProcess.png" /></p>
+<hr />
+<div id="load-msstats-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Load MSstats</h3>
+<p>Load MSstats first. Then you are ready to start MSstats.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MSstats)
+?MSstats</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggplot2&#39;:
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang</code></pre>
+</div>
+<div id="load-the-pre-processed-data-of-skyline-output" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Load the pre-processed data of Skyline output</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&#39;data/data_Skyline/input.skyline.rda&#39;</span>)</code></pre>
+</div>
+<div id="normalizing-and-summarizing-data-with-dataprocess" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Normalizing and summarizing data with dataProcess</h3>
+<p><strong>! Always pay attention to the default options </strong></p>
+<p>To get started with this function, visit the help section of <code>dataProcess</code> first:</p>
+<pre class="sourceCode r"><code class="sourceCode r">?dataProcess</code></pre>
+<div id="default-normalization-and-summarization-options" class="section level4">
+<h4><span class="header-section-number">2.2.3.1</span> Default normalization and summarization options</h4>
+<p><code>dataProcess</code> perform (1) normalization first. The default option for normalization is <code>equalizeMedians</code>. `equalizeMedians’ fits for label-based SRM experiments, which we can use reference signals. There are three more options for normalization. Depending on the suitable assumption for your experiment, you can choose one of them.</p>
+<p>Then, (2) run level summarization will be performed including missing value imputation by accerelated failure model and robust parameter estimation by TMP (Tukey’s median polish).</p>
+<p>Below show the default for all options in dataProcess except <code>censoredInt</code>. <code>censoredInt='0'</code> should be used for Skyline output.</p>
+<pre class="sourceCode r"><code class="sourceCode r">quant.skyline &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.skyline, 
+                             <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                             <span class="dt">normalization =</span> <span class="st">&#39;equalizeMedians&#39;</span>,
+                             <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                             <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                             <span class="dt">censoredInt=</span><span class="st">&#39;0&#39;</span>,
+                             <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                             <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+<p>Let’s check output from <code>dataProcess</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show the name of outputs</span>
+<span class="kw">names</span>(quant.skyline)</code></pre>
+<pre><code>## [1] &quot;ProcessedData&quot;     &quot;RunlevelData&quot;      &quot;SummaryMethod&quot;    
+## [4] &quot;ModelQC&quot;           &quot;PredictBySurvival&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show reformated and normalized data.</span>
+<span class="co"># &#39;ABUNDANCE&#39; column has normalized log2 transformed intensities.</span>
+<span class="kw">head</span>(quant.skyline<span class="op">$</span>ProcessedData)</code></pre>
+<pre><code>##                 PROTEIN                  PEPTIDE TRANSITION
+## 3  sp|D6VTK4|STE2_YEAST EGEVEPVDMYTPDTAADEEARK_3     sum_NA
+## 20 sp|D6VTK4|STE2_YEAST    FYPGTLSSFQTDSINNDAK_2     sum_NA
+## 35 sp|D6VTK4|STE2_YEAST             IGPFADASYK_2     sum_NA
+## 46 sp|D6VTK4|STE2_YEAST                KETTSDK_2     sum_NA
+## 51 sp|D6VTK4|STE2_YEAST          NQFYQLPTPTSSK_2     sum_NA
+## 62 sp|D6VTK4|STE2_YEAST           TFVSETADDIEK_2     sum_NA
+##                            FEATURE LABEL GROUP_ORIGINAL SUBJECT_ORIGINAL
+## 3  EGEVEPVDMYTPDTAADEEARK_3_sum_NA     L     Condition1                1
+## 20    FYPGTLSSFQTDSINNDAK_2_sum_NA     L     Condition1                1
+## 35             IGPFADASYK_2_sum_NA     L     Condition1                1
+## 46                KETTSDK_2_sum_NA     L     Condition1                1
+## 51          NQFYQLPTPTSSK_2_sum_NA     L     Condition1                1
+## 62           TFVSETADDIEK_2_sum_NA     L     Condition1                1
+##    RUN GROUP SUBJECT INTENSITY SUBJECT_NESTED ABUNDANCE FRACTION
+## 3    1     1       1 187418443            1.1  27.23304        1
+## 20   1     1       1  86229170            1.1  26.11302        1
+## 35   1     1       1 157996653            1.1  26.98667        1
+## 46   1     1       1 177684007            1.1  27.15609        1
+## 51   1     1       1 140368798            1.1  26.81600        1
+## 62   1     1       1 182600922            1.1  27.19547        1
+##                  originalRUN censored
+## 3  JD_06232014_sample1_B.raw    FALSE
+## 20 JD_06232014_sample1_B.raw    FALSE
+## 35 JD_06232014_sample1_B.raw    FALSE
+## 46 JD_06232014_sample1_B.raw    FALSE
+## 51 JD_06232014_sample1_B.raw    FALSE
+## 62 JD_06232014_sample1_B.raw    FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This table includes run-level summarized log2 intensities. (column : LogIntensities)</span>
+<span class="co"># Now one summarized log2 intensities per Protein and Run.</span>
+<span class="co"># NumMeasuredFeature : show how many features are used for run-level summarization.</span>
+<span class="co">#         If there is no missing value, it should be the number of features in certain protein.</span>
+<span class="co"># MissingPercentage : the number of missing features / the number of features in certain protein.</span>
+<span class="kw">head</span>(quant.skyline<span class="op">$</span>RunlevelData)</code></pre>
+<pre><code>##   RUN              Protein LogIntensities NumMeasuredFeature
+## 1   1 sp|D6VTK4|STE2_YEAST       26.95958                  7
+## 2   2 sp|D6VTK4|STE2_YEAST       26.78088                  7
+## 3   3 sp|D6VTK4|STE2_YEAST       26.68074                  7
+## 4   4 sp|D6VTK4|STE2_YEAST       26.98540                  7
+## 5   5 sp|D6VTK4|STE2_YEAST       26.90384                  7
+## 6   6 sp|D6VTK4|STE2_YEAST       26.71479                  7
+##   MissingPercentage more50missing NumImputedFeature
+## 1                 0         FALSE                 0
+## 2                 0         FALSE                 0
+## 3                 0         FALSE                 0
+## 4                 0         FALSE                 0
+## 5                 0         FALSE                 0
+## 6                 0         FALSE                 0
+##                 originalRUN GROUP GROUP_ORIGINAL SUBJECT_ORIGINAL
+## 1 JD_06232014_sample1_B.raw     1     Condition1                1
+## 2 JD_06232014_sample1_C.raw     1     Condition1                1
+## 3 JD_06232014_sample1-A.raw     1     Condition1                1
+## 4 JD_06232014_sample2_A.raw     2     Condition2                2
+## 5 JD_06232014_sample2_B.raw     2     Condition2                2
+## 6 JD_06232014_sample2_C.raw     2     Condition2                2
+##   SUBJECT_NESTED SUBJECT
+## 1            1.1       1
+## 2            1.1       1
+## 3            1.1       1
+## 4            2.4       4
+## 5            2.4       4
+## 6            2.4       4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show which summarization method is used.</span>
+<span class="kw">head</span>(quant.skyline<span class="op">$</span>SummaryMethod)</code></pre>
+<pre><code>## [1] &quot;TMP&quot;</code></pre>
+<hr />
+</div>
+</div>
+<div id="visualization-of-processed-data" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Visualization of processed data</h3>
+<div id="quality-control-plots" class="section level4">
+<h4><span class="header-section-number">2.2.4.1</span> Quality control plots</h4>
+<p>Now let’s look at what the equalize medians procedure did to our data. QC plot is good to see the distribution of intensities per MS run and outliers. So, it is good visualization to check normalization. However, not good to see individual intensities.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># QC plot for normalized data with equalize median method</span>
+<span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.skyline, 
+                 <span class="dt">type=</span><span class="st">&quot;QCplot&quot;</span>, 
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;allonly&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&#39;data/data_Skyline/ABRF_skyline_equalizeNorm_&#39;</span>)</code></pre>
+<p>Then, <code>ABRF_skyline_equalizeNorm_QCPlot.pdf</code> are generated in the currect directory.</p>
+<p><img src="img/ABRF_skyline_equalizeNorm_QCPlot.png" style="width:50.0%" /></p>
+<p>Now the median log2 intensities per run across MS runs (lines in the boxes) are the same.</p>
+</div>
+<div id="profile-plots" class="section level4">
+<h4><span class="header-section-number">2.2.4.2</span> Profile plots</h4>
+<p>Profile plot is good visualization to check individual measurements. Each dot means one intensity. The dots are linked with line per feature. If line is disconnected, that means there is no value (missing value). Color means different peptides and charge stages. Different line type means different transition.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if you have many MS runs, adjust width of plot (makd wider)</span>
+<span class="co"># Profile plot for the data with equalized median method</span>
+<span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.skyline, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_Skyline/ABRF_skyline_equalizeNorm_&quot;</span>)</code></pre>
+<p><code>ABRF_skyline_equalizeNorm_ProfilePlot.pdf</code> and <code>ABRF_skyline_equalizeNorm_ProfilePlot_wSummarization.pdf</code> are generated in the current directory.</p>
+<p>Then, Let’s go though profile plots to see overall quality of data.</p>
+<p>There are two pdfs for each protein, first is profile plot with normalized data and second plot is profile plot with normalilzed data and summarized data. This profile plot shows each peptide transition across runs, grouped per condition. Ech peptide has a different colour/type layout.</p>
+<p><img src="img/ABRF_skyline_equalizeNorm_ProfilePlot_1.png" style="width:50.0%" /></p>
+<p>This plot shows The panel on the right shows the same transitions in grey, with the values as summarized by the model overlayed in red.</p>
+<p><img src="img/ABRF_skyline_equalizeNorm_ProfilePlot_wSummarization_1.png" style="width:50.0%" /></p>
+<p>Instead of making all profile plots for all proteins, we can make plot for individual protein.
+Here is the example of spike-in protein, <code>sp|P44015|VAC2_YEAST</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.skyline, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;sp|P44015|VAC2_YEAST&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_Skyline/ABRF_skyline_equalizeNorm_P44015_&quot;</span>)</code></pre>
+<p><img src="img/ABRF_skyline_equalizeNorm_P44015_ProfilePlot.png" style="width:50.0%" /></p>
+<p><img src="img/ABRF_skyline_equalizeNorm_P44015_ProfilePlot_wSummarization.png" style="width:50.0%" /></p>
+</div>
+<div id="condition-plots" class="section level4">
+<h4><span class="header-section-number">2.2.4.3</span> Condition plots</h4>
+<p>Condition plots illustrate the systematic difference between conditions. The dots indicates the mean of all summarized intensities in each condition and default error bar is CI with 0.95 significant level. However, it is not related with model-based analysis.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.skyline, 
+                 <span class="dt">type=</span><span class="st">&quot;conditionplot&quot;</span>, 
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_Skyline/ABRF_skyline_equalizeNorm_&quot;</span>)</code></pre>
+<p>We can draw the condition plot for a protein, <code>sp|P44015|VAC2_YEAST</code> .</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.skyline, 
+                 <span class="dt">type=</span><span class="st">&quot;conditionplot&quot;</span>, 
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;sp|P44015|VAC2_YEAST&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_Skyline/ABRF_skyline_equalizeNorm_P44015_&quot;</span>)</code></pre>
+<p><img src="img/ABRF_skyline_equalizeNorm_ConditionPlot_P44015.png" style="width:50.0%" /></p>
+<blockquote>
+<p>Challenge</p>
+<p>This is the study design. Let’s check visualization for other 5 spike-in proteins.
+1. sp|P55752|ISCB_YEAST
+2. sp|P44374|SFG2_YEAST
+3. sp|P44983|UTR6_YEAST
+4. sp|P44683|PGA4_YEAST
+5. sp|P55249|ZRT4_YEAST</p>
+</blockquote>
+<div class="figure">
+<img src="img/Protein_sample_information.png" alt="Experimental design for spike-in proteins" style="width:50.0%" />
+<p class="caption">Experimental design for spike-in proteins</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="different-normalization-option" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Different normalization option</h3>
+<p>Let’s see the different normalization effect with SRM dataset including two proteins</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(SRMRawData)</code></pre>
+<pre><code>##     ProteinName PeptideSequence PrecursorCharge FragmentIon ProductCharge
+## 243        IDHC   ATDVIVPEEGELR               2          y7            NA
+## 244        IDHC   ATDVIVPEEGELR               2          y7            NA
+## 245        IDHC   ATDVIVPEEGELR               2          y8            NA
+## 246        IDHC   ATDVIVPEEGELR               2          y8            NA
+## 247        IDHC   ATDVIVPEEGELR               2          y9            NA
+## 248        IDHC   ATDVIVPEEGELR               2          y9            NA
+##     IsotopeLabelType Condition BioReplicate Run   Intensity
+## 243                H         1        ReplA   1 84361.08350
+## 244                L         1        ReplA   1   215.13526
+## 245                H         1        ReplA   1 29778.10188
+## 246                L         1        ReplA   1    98.02134
+## 247                H         1        ReplA   1 17921.29255
+## 248                L         1        ReplA   1    60.47029</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(SRMRawData<span class="op">$</span>ProteinName)</code></pre>
+<pre><code>## [1] IDHC PMG2
+## 45 Levels: ACEA ACH1 ACON ADH1 ADH2 ADH4 ALDH6 ALF CISY1 CISY2 ... SUCB</code></pre>
+<div id="no-normalization" class="section level4">
+<h4><span class="header-section-number">2.2.5.1</span> No normalization</h4>
+<p>No normalization is performed. If you had your own normalization before <code>MSstats</code>, you should use like below.</p>
+<pre class="sourceCode r"><code class="sourceCode r">srm.nonorm &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(SRMRawData, <span class="dt">normalization=</span><span class="ot">FALSE</span>)
+<span class="kw">dataProcessPlots</span>(srm.nonorm, <span class="dt">type=</span><span class="st">&#39;QCplot&#39;</span>, <span class="dt">address=</span><span class="st">&#39;srm_noNorm_&#39;</span>)</code></pre>
+<p><img src="img/srm_noNorm_QCPlot.png" style="width:50.0%" /></p>
+</div>
+<div id="equalize-medians-normalization" class="section level4">
+<h4><span class="header-section-number">2.2.5.2</span> Equalize medians normalization</h4>
+<p>The default option for normalization is ‘equalizeMedians’, where all the
+intensities in a run are shifted by a constant, to equalize the median of intensities across runs for
+label-free experiment. This normalization method is appropriate <strong>when we can assume that the
+majority of proteins do not change across runs</strong>. Be cautious when using the <code>equalizeMedians</code>
+option for a label-free DDA dataset with only a small number of proteins. For label based experiment,
+<code>equalizeMedians</code> equalizes the median of reference intensities across runs and is generally proper
+even for a dataset with a small number of proteins.</p>
+<pre class="sourceCode r"><code class="sourceCode r">srm.equalmed &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(SRMRawData, <span class="dt">normalization =</span> <span class="st">&#39;equalizeMedians&#39;</span>)
+<span class="kw">dataProcessPlots</span>(srm.equalmed, <span class="dt">type=</span><span class="st">&#39;QCplot&#39;</span>, <span class="dt">address=</span><span class="st">&#39;srm_equalM_&#39;</span>)</code></pre>
+<p><img src="img/srm_equalM_QCPlot.png" style="width:50.0%" /></p>
+</div>
+<div id="quantile-normalization" class="section level4">
+<h4><span class="header-section-number">2.2.5.3</span> Quantile normalization</h4>
+<p>The distribution of all the intensities in each run will become the same across runs for
+label-free experiment. For label-based experiment, the distribution of all the reference intensities
+will be become the same across runs and all the endogenous intensities are shifted by a constant
+corresponding to reference intensities.</p>
+<pre class="sourceCode r"><code class="sourceCode r">srm.quantile &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(SRMRawData, <span class="dt">normalization=</span><span class="st">&#39;quantile&#39;</span>)
+<span class="kw">dataProcessPlots</span>(srm.quantile, <span class="dt">type=</span><span class="st">&#39;QCplot&#39;</span>, <span class="dt">address=</span><span class="st">&#39;srm_quantile_&#39;</span>)</code></pre>
+<p><img src="img/srm_quantile_QCPlot.png" style="width:50.0%" /></p>
+</div>
+<div id="global-standards-normalization-example-1" class="section level4">
+<h4><span class="header-section-number">2.2.5.4</span> Global standards normalization : example 1</h4>
+<p>If you have a spiked in standard across all MS runs, you may set this to <code>globalStandards</code> and define the standard with <code>nameStandards</code> option. Global standard peptide or Protein names, which you can assume that they have the same abundance across MS runs, should be assigned in the vector for this option.</p>
+<p>First, let’s assume that <code>PMG2</code> proteins is the spike-in protein and shoule be equal amount across MS runs.</p>
+<pre class="sourceCode r"><code class="sourceCode r">srm.global.pmg2 &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(SRMRawData, <span class="dt">normalization =</span><span class="st">&#39;globalStandards&#39;</span>,
+                               <span class="dt">nameStandards =</span> <span class="st">&#39;PMG2&#39;</span>)
+<span class="kw">dataProcessPlots</span>(srm.global.pmg2, <span class="dt">type=</span><span class="st">&#39;QCplot&#39;</span>, <span class="dt">address=</span><span class="st">&#39;srm_global_PMG2_&#39;</span>)</code></pre>
+<p><img src="img/srm_global_PMG2_QCPlot.png" style="width:50.0%" /></p>
+<p>Second, let’s assume that <code>IDHC</code> proteins is the spike-in protein and shoule be equal amount across MS runs.</p>
+</div>
+<div id="global-standards-normalization-example-2" class="section level4">
+<h4><span class="header-section-number">2.2.5.5</span> Global standards normalization : example 2</h4>
+<pre class="sourceCode r"><code class="sourceCode r">srm.global.idhc &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(SRMRawData, <span class="dt">normalization =</span><span class="st">&#39;globalStandards&#39;</span>,
+                               <span class="dt">nameStandards =</span> <span class="st">&#39;IDHC&#39;</span>)
+<span class="kw">dataProcessPlots</span>(srm.global.idhc, <span class="dt">type=</span><span class="st">&#39;QCplot&#39;</span>, <span class="dt">address=</span><span class="st">&#39;srm_global_IDHC_&#39;</span>)</code></pre>
+<p><img src="img/srm_global_IDHC_QCPlot.png" style="width:50.0%" /></p>
+</div>
+</div>
+<div id="different-summarization-option" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> Different summarization option</h3>
+<p>Here is the summary of combinations for imputation options with summaryMethod=‘TMP’.</p>
+<ul>
+<li><p>MBimpute=TRUE : AFT model-based imputation using <code>cutoffCensored</code> value in the AFT model.</p></li>
+<li><p>The default option for <code>cutoffCensored</code> is <code>minFeature</code>, taking the minimum value for the corresponding
+feature. With this option, those runs with substantial missing measurements will be biased by
+the cutoff value. In such case, you may remove the runs that have more than 50% missing values from the
+analysis with the option remove50missing=TRUE.</p></li>
+<li><p>In case that there are completely missing measurements in a run for a protein, any imputation
+will not be performed.</p></li>
+</ul>
+<div id="no-imputation-tmp-summarization-only" class="section level4">
+<h4><span class="header-section-number">2.2.6.1</span> No imputation, TMP summarization only</h4>
+<pre class="sourceCode r"><code class="sourceCode r">quant.skyline.TMPonly &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.skyline, 
+                                      <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                                      <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                                      <span class="dt">MBimpute=</span><span class="ot">FALSE</span>, <span class="co">##</span>
+                                      <span class="dt">censoredInt=</span><span class="st">&#39;0&#39;</span>,
+                                      <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                                      <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+<p>The column, <code>censored</code>, is not in the processed data any more.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(quant.skyline.TMPonly<span class="op">$</span>ProcessedData)</code></pre>
+<pre><code>##                    PROTEIN                       PEPTIDE TRANSITION
+## 27092 sp|D6VTK4|STE2_YEAST EGEVEPVDM[+16]YTPDTAADEEARK_3     sum_NA
+## 10700 sp|D6VTK4|STE2_YEAST      EGEVEPVDMYTPDTAADEEARK_3     sum_NA
+## 20407 sp|D6VTK4|STE2_YEAST         FYPGTLSSFQTDSINNDAK_2     sum_NA
+## 2213  sp|D6VTK4|STE2_YEAST                  IGPFADASYK_2     sum_NA
+## 938   sp|D6VTK4|STE2_YEAST                     KETTSDK_2     sum_NA
+## 26116 sp|D6VTK4|STE2_YEAST               NQFYQLPTPTSSK_2     sum_NA
+##                                    FEATURE LABEL GROUP_ORIGINAL
+## 27092 EGEVEPVDM[+16]YTPDTAADEEARK_3_sum_NA     L     Condition1
+## 10700      EGEVEPVDMYTPDTAADEEARK_3_sum_NA     L     Condition1
+## 20407         FYPGTLSSFQTDSINNDAK_2_sum_NA     L     Condition1
+## 2213                   IGPFADASYK_2_sum_NA     L     Condition1
+## 938                       KETTSDK_2_sum_NA     L     Condition1
+## 26116               NQFYQLPTPTSSK_2_sum_NA     L     Condition1
+##       SUBJECT_ORIGINAL RUN GROUP SUBJECT SUBJECT_NESTED INTENSITY
+## 27092                1   1     1       1            1.1   5222795
+## 10700                1   1     1       1            1.1 182195648
+## 20407                1   1     1       1            1.1  86229170
+## 2213                 1   1     1       1            1.1 157996653
+## 938                  1   1     1       1            1.1 177684007
+## 26116                1   1     1       1            1.1 140368798
+##       ABUNDANCE METHOD               originalRUN
+## 27092  22.07353      1 JD_06232014_sample1_B.raw
+## 10700  27.19805      1 JD_06232014_sample1_B.raw
+## 20407  26.11881      1 JD_06232014_sample1_B.raw
+## 2213   26.99246      1 JD_06232014_sample1_B.raw
+## 938    27.16188      1 JD_06232014_sample1_B.raw
+## 26116  26.82179      1 JD_06232014_sample1_B.raw</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="dataprocess-with-maxquant-data" class="section level2">
+<h2><span class="header-section-number">2.3</span> dataProcess with MaxQuant data</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&#39;data/data_MaxQuant/input.maxquant.rda&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(input.maxquant)</code></pre>
+<pre><code>##   ProteinName        PeptideSequence PrecursorCharge FragmentIon
+## 1      D6VTK4 EGEVEPVDMYTPDTAADEEARK               3          NA
+## 2      D6VTK4    FYPGTLSSFQTDSINNDAK               2          NA
+## 3      D6VTK4             IGPFADASYK               2          NA
+## 4      D6VTK4          NQFYQLPTPTSSK               2          NA
+## 5      D6VTK4           TFVSETADDIEK               2          NA
+## 6      D6VTK4         TNTITSDFTTSTDR               2          NA
+##   ProductCharge IsotopeLabelType  Condition BioReplicate
+## 1            NA                L Condition1            1
+## 2            NA                L Condition1            1
+## 3            NA                L Condition1            1
+## 4            NA                L Condition1            1
+## 5            NA                L Condition1            1
+## 6            NA                L Condition1            1
+##                     Run Intensity
+## 1 JD_06232014_sample1_B  87141000
+## 2 JD_06232014_sample1_B  46167000
+## 3 JD_06232014_sample1_B  45425000
+## 4 JD_06232014_sample1_B  47094000
+## 5 JD_06232014_sample1_B        NA
+## 6 JD_06232014_sample1_B  62786000</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">is.na</span>(input.maxquant<span class="op">$</span>Intensity)) </code></pre>
+<pre><code>## [1] 40056</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(input.maxquant<span class="op">$</span>Intensity) <span class="op">&amp;</span><span class="st"> </span>input.maxquant<span class="op">$</span>Intensity<span class="op">==</span><span class="dv">0</span>)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p><strong>Note!</strong> MaxQuant output has only <code>NA</code>. <strong>censoredInt=‘NA’</strong> should be used for MaxQuant output.</p>
+<blockquote>
+<p>Challenges</p>
+<ol style="list-style-type: decimal">
+<li>Try <code>dataProcess</code> with equalize median normalization for MaxQuant output. (<code>input.maxquant.rda</code> from section 1)</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">quant.maxquant &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.maxquant, 
+                                      <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                                      <span class="co">#normalization = &#39;quantile&#39;,</span>
+                                      <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                                      <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                                      <span class="dt">censoredInt=</span><span class="st">&#39;NA&#39;</span>,
+                                      <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                                      <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Try <code>dataProcess</code> with quantile normalization for MaxQuant output. (<code>input.maxquant.rda</code> from section 1)</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">quant.maxquant.quantile &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.maxquant, 
+                              <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                              <span class="dt">normalization =</span> <span class="st">&#39;quantile&#39;</span>,
+                              <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                              <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                              <span class="dt">censoredInt=</span><span class="st">&#39;NA&#39;</span>,
+                              <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                              <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Draw QC plots for both cases above and compare.</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.maxquant, 
+                 <span class="dt">type=</span><span class="st">&quot;QCplot&quot;</span>, 
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;allonly&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&#39;data/data_MaxQuant/ABRF_maxquant_equalMed_&#39;</span>)
+
+<span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.maxquant.quantile, 
+                 <span class="dt">type=</span><span class="st">&quot;QCplot&quot;</span>, 
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;allonly&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&#39;data/data_MaxQuant/ABRF_maxquant_quantile_&#39;</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>Draw Profile plots of protein <code>P55249</code>, for both cases above and compare.</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.maxquant, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;P55249&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_MaxQuant/ABRF_maxquant_equalMed_P55249_&quot;</span>)
+
+<span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.maxquant.quantile, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;P55249&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_MaxQuant/ABRF_maxquant_quantile_P55249_&quot;</span>)</code></pre>
+</details>
+<hr />
+</div>
+<div id="dataprocess-with-openms-data" class="section level2">
+<h2><span class="header-section-number">2.4</span> dataProcess with OpenMS data</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&#39;data/data_OpenMS/input.openms.rda&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(input.openms)</code></pre>
+<pre><code>##            ProteinName        PeptideSequence PrecursorCharge FragmentIon
+## 1 sp|D6VTK4|STE2_YEAST EGEVEPVDMYTPDTAADEEARK               3          NA
+## 2 sp|D6VTK4|STE2_YEAST    FYPGTLSSFQTDSINNDAK               2          NA
+## 3 sp|D6VTK4|STE2_YEAST             IGPFADASYK               2          NA
+## 4 sp|D6VTK4|STE2_YEAST          NQFYQLPTPTSSK               2          NA
+## 5 sp|D6VTK4|STE2_YEAST           TFVSETADDIEK               2          NA
+## 6 sp|D6VTK4|STE2_YEAST         TNTITSDFTTSTDR               2          NA
+##   ProductCharge IsotopeLabelType Condition BioReplicate Run Intensity
+## 1             0                L         1            1   1  64757900
+## 2             0                L         1            1   1  38852700
+## 3             0                L         1            1   1  73225800
+## 4             0                L         1            1   1  63139900
+## 5             0                L         1            1   1        NA
+## 6             0                L         1            1   1  58905300</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">is.na</span>(input.openms<span class="op">$</span>Intensity)) </code></pre>
+<pre><code>## [1] 21962</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(input.openms<span class="op">$</span>Intensity) <span class="op">&amp;</span><span class="st"> </span>input.openms<span class="op">$</span>Intensity<span class="op">==</span><span class="dv">0</span>)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p><strong>Note!</strong> OpenMS output has only <code>NA</code>. <strong>censoredInt=‘NA’</strong> should be used for OpenMS output.</p>
+<blockquote>
+<p>Challenges</p>
+<ol style="list-style-type: decimal">
+<li>Try <code>dataProcess</code> with equalize normalization for OpenMS output. (<code>input.openms.rda</code> from section 1)</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">quant.openms &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.openms, 
+                              <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                              <span class="co">#normalization = &#39;quantile&#39;,</span>
+                              <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                              <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                              <span class="dt">censoredInt=</span><span class="st">&#39;NA&#39;</span>,
+                              <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                              <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Try <code>dataProcess</code> with quantile normalization for OpenMS output. (<code>input.openms.rda</code> from section 1)</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">quant.openms.quantile &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.openms, 
+                                       <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                                       <span class="dt">normalization =</span> <span class="st">&#39;quantile&#39;</span>,
+                                       <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                                       <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                                       <span class="dt">censoredInt=</span><span class="st">&#39;NA&#39;</span>,
+                                       <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                                       <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Draw Profile plots of protein <code>sp|P55249|ZRT4_YEAST</code>, for both cases above and compare.</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.openms, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;sp|P55249|ZRT4_YEAST&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_OpenMS/ABRF_openms_equalMed_P55249_&quot;</span>)
+
+<span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.openms.quantile, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;sp|P55249|ZRT4_YEAST&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_OpenMS/ABRF_openms_quantile_P55249_&quot;</span>)</code></pre>
+</details>
+<hr />
+</div>
+<div id="dataprocess-with-progenesis-data" class="section level2">
+<h2><span class="header-section-number">2.5</span> dataProcess with Progenesis data</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&#39;data/data_Progenesis/input.progenesis.rda&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(input.progenesis)</code></pre>
+<pre><code>##             ProteinName       PeptideModifiedSequence PrecursorCharge
+## 1 sp|A5Z2X5|YP010_YEAST              LTGNPELSSLDEVLAK               2
+## 2 sp|A5Z2X5|YP010_YEAST RPAQLLL[N-term] nTerm+42.0106               2
+## 3  sp|D6VTK4|STE2_YEAST        EGEVEPVDMYTPDTAADEEARK               3
+## 4  sp|D6VTK4|STE2_YEAST           FYPGTLSSFQTDSINNDAK               2
+## 5  sp|D6VTK4|STE2_YEAST                    IGPFADASYK               2
+## 6  sp|O13297|CET1_YEAST                   IAGNAVGSVVK               2
+##   FragmentIon ProductCharge IsotopeLabelType  Condition BioReplicate
+## 1          NA            NA                L Condition1            1
+## 2          NA            NA                L Condition1            1
+## 3          NA            NA                L Condition1            1
+## 4          NA            NA                L Condition1            1
+## 5          NA            NA                L Condition1            1
+## 6          NA            NA                L Condition1            1
+##                     Run Intensity
+## 1 JD_06232014_sample1_B 2550357.3
+## 2 JD_06232014_sample1_B  865491.8
+## 3 JD_06232014_sample1_B 3767734.3
+## 4 JD_06232014_sample1_B 2591735.2
+## 5 JD_06232014_sample1_B 2301483.1
+## 6 JD_06232014_sample1_B  415181.8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">is.na</span>(input.progenesis<span class="op">$</span>Intensity)) </code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(input.progenesis<span class="op">$</span>Intensity) <span class="op">&amp;</span><span class="st"> </span>input.progenesis<span class="op">$</span>Intensity<span class="op">==</span><span class="dv">0</span>)</code></pre>
+<pre><code>## [1] 418</code></pre>
+<p><strong>Note!</strong> Progenesis output has only <code>0</code>. <strong>censoredInt=‘0’</strong> should be used for Progenesis output.</p>
+<blockquote>
+<p>Challenges</p>
+<ol style="list-style-type: decimal">
+<li>Try <code>dataProcess</code> with equalize normalization for Progenesis output. (<code>input.progenesis.rda</code> from section 1)</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">quant.progenesis &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.progenesis, 
+                              <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                              <span class="co">#normalization = &#39;quantile&#39;,</span>
+                              <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                              <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                              <span class="dt">censoredInt=</span><span class="st">&#39;0&#39;</span>,
+                              <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                              <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Try <code>dataProcess</code> with quantile normalization for Progenesis output. (<code>input.progenesis.rda</code> from section 1)</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">quant.progenesis.quantile &lt;-<span class="st"> </span><span class="kw">dataProcess</span>(<span class="dt">raw =</span> input.progenesis, 
+                                       <span class="dt">logTrans=</span><span class="dv">2</span>, 
+                                       <span class="dt">normalization =</span> <span class="st">&#39;quantile&#39;</span>,
+                                       <span class="dt">summaryMethod =</span> <span class="st">&#39;TMP&#39;</span>, 
+                                       <span class="dt">MBimpute=</span><span class="ot">TRUE</span>,
+                                       <span class="dt">censoredInt=</span><span class="st">&#39;0&#39;</span>,
+                                       <span class="dt">cutoffCensored=</span><span class="st">&#39;minFeature&#39;</span>,
+                                       <span class="dt">maxQuantileforCensored =</span> <span class="fl">0.999</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Draw Profile plots of protein <code>sp|P55249|ZRT4_YEAST</code>, for both cases above and compare.</li>
+</ol>
+</blockquote>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.progenesis, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;sp|P55249|ZRT4_YEAST&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_Progenesis/ABRF_progenesis_equalMed_P55249_&quot;</span>)
+
+<span class="kw">dataProcessPlots</span>(<span class="dt">data =</span> quant.progenesis.quantile, 
+                 <span class="dt">type=</span><span class="st">&quot;Profileplot&quot;</span>, 
+                 <span class="dt">featureName=</span><span class="st">&quot;NA&quot;</span>,
+                 <span class="dt">width=</span><span class="dv">7</span>, <span class="dt">height=</span><span class="dv">7</span>,
+                 <span class="dt">which.Protein =</span> <span class="st">&#39;sp|P55249|ZRT4_YEAST&#39;</span>,
+                 <span class="dt">address=</span><span class="st">&quot;data/data_Progenesis/ABRF_progenesis_quantile_P55249_&quot;</span>)</code></pre>
+</details>
+<blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>Compare profile plots from MaxQuant data.</li>
+</ol>
+</blockquote>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/MayInst_P6_day1_sec2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
