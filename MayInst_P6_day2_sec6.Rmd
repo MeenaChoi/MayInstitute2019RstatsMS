@@ -1,0 +1,353 @@
+---
+title: "Statistics for quantitative mass spectrometry - Day 2"
+subtitle: "Section 6 : Multivariate analysis and classification"
+author: "Ting Huang"
+date: "5/7/2019"
+output: 
+  html_document:
+    self_contained: true
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Day 2 - Section 6 : Multivariate analysis and classification
+
+## Data
+- The protein-level data `quant.pd.rda` from section 5.
+
+***
+
+## Protein quantification
+
+### Read the protein level data from MSstatsTMT
+```{r, warning=FALSE, message=FALSE}
+library(tidyr)
+library(dplyr)
+
+# load data
+load('data/data_ProteomeDiscoverer_TMT/quant.pd.rda')
+
+# Pretend the two replicates within each condition and mixture are biological replicate
+quant.pd <- quant.pd %>% 
+  mutate(BioReplicate = paste(Mixture, Channel, sep="_"))
+```
+
+### Protein quantification
+We should first get subject quantification for each protein. 
+```{r, results="hide", message = FALSE}
+# protein quantification per subject
+head(quant.pd)
+
+# use technical replicate 2 and 3 as training data
+quant.pd.per.subject <- quant.pd %>% filter(TechRepMixture != "1") %>% 
+  group_by(Protein, BioReplicate) %>% 
+  summarise(Abundance = median(Abundance, na.rm = TRUE)) %>%
+  spread(BioReplicate, Abundance)
+
+train_abun <- quant.pd.per.subject
+colnames(train_abun)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# make protein abundance matrix
+proteins <- train_abun$Protein
+train_abun <- train_abun[, -1]
+train_abun <- t(train_abun)
+colnames(train_abun) <- proteins
+dim(train_abun) # there are 50 rows (each row for subject) and 50 columns (one column per protein)
+
+# get annotation information
+colnames(quant.pd)
+train_anno <- quant.pd %>% select(BioReplicate, Condition)
+train_anno <- unique(train_anno)
+train_anno <- as.data.frame(train_anno)
+dim(train_anno) # there are 50 rows (each row for subject)
+
+## remove the normalization channels
+train_abun <- train_abun[train_anno$Condition != "Norm",]
+train_anno <- train_anno[train_anno$Condition != "Norm",]
+```
+
+### Deal with missing values
+Please check whether there are missing values (NAs) or not. If there is no intensity at all in certain subject for certain protein, we can't get subject-summarized for that run.
+```{r}
+sum(is.na(train_abun))
+```
+
+There are three NAs. Then, we need to decide how to deal with NAs.
+* First option: remove the samples with missing values
+* Second option: impute the missing values. Such as 1)  with minimum value per protein or among all proteins, 2) with median or mean.
+
+```{r}
+# First option: remove the samples with missing values
+dim(na.omit(train_abun))
+
+# Second option: impute the missing values with miminal value
+random.imp <- function (a){
+  missing <- is.na(a)
+  n.missing <- sum(missing)
+  a.obs <- a[!missing]
+  imputed <- a
+  # imputed[missing] <- 0 # with zero
+  # imputed[missing] <- median(a.obs) # with median values
+  imputed[missing] <- min(a.obs) # with minimal values
+  return (imputed)
+}
+
+pMiss <- function(x){
+  sum(is.na(x))/length(x)*100
+}
+```
+
+#### Only keep the subjects with less than 5% missing values
+```{r}
+subjectmissing <- apply(train_abun, 1, pMiss)
+train_abun <- train_abun[subjectmissing <= 5, ]
+dim(train_abun)
+```
+
+#### Impute the missing values
+In this case, let's impute the missing values with minimum value per protein.
+```{r}
+# make sure the subject order in train_abun and train_anno consistent
+train_anno <- train_anno[train_anno$BioReplicate %in% rownames(train_abun),] #remvoe the filtered subjects
+train_abun <- train_abun[train_anno$BioReplicate,]
+
+imputed_train_abun <- apply(train_abun, 2, function(x) random.imp(x))
+imputed_train_abun <- as.data.frame(imputed_train_abun)
+
+sum(is.na(imputed_train_abun))
+```
+
+***
+
+## Principal components analysis (PCA)
+
+### PCA with `prcomp` function
+Input has the row for run (subject) and the column for proteins.
+
+```{r}
+?prcomp
+# rows are proteins and columns are subjects
+pc <- prcomp(imputed_train_abun)
+
+# Inspect PCA object
+summary(pc)
+names(pc)
+```
+
+### Check the proportion of explained variance
+
+Let's check the proportion of explained variance. The first component has the largest variance. In this case, we need 2 components to capture most of the variation.
+```{r}
+percent_var <- pc$sdev^2/sum(pc$sdev^2)
+barplot(percent_var, xlab="Principle component", ylab="% of variance")
+
+cum_var <- cumsum(pc$sdev^2/sum(pc$sdev^2))
+barplot(cum_var, xlab="Principle component", ylab="Cumulative % of variance" )
+```
+
+### Visualization for PC1 vs PC2
+
+Let's visualize PC1 vs PC2 in scatterplot. 'x' include PC components for each subject.
+
+```{r, warning=FALSE, message=FALSE}
+# head(pc$x)
+library(ggplot2)
+
+ggplot(aes(x=PC1, y=PC2), data=data.frame(pc$x))+
+  geom_point(size=4, alpha=0.5)+
+  theme_bw()
+```
+
+In order to distinguish group by colors or shape, add Group informtion to ggplot. The order should be the same as column of input.
+
+```{r}
+head(train_anno)
+
+# Create PC1 vs PC2 scatterplot with Condition colors
+ggplot(aes(x=PC1, y=PC2, color=Condition), data=data.frame(pc$x, Condition=train_anno$Condition))+
+    geom_point(size=4, alpha=0.5)+
+    theme_bw()
+```
+
+***
+
+## Heatmap
+
+### matrix format
+```{r}
+ht.data <- t(imputed_train_abun)
+# check the class
+class(ht.data)
+```
+
+### `heatmap` function in base `stats` package
+
+First, let's try to draw heatmap with base function.
+```{r}
+# Change the font of row and column label
+heatmap(ht.data, cexRow = 0.3, cexCol = 0.4)
+
+library(marray)
+my.colors <- c(maPalette(low = "darkblue", high = "white", k = 7)[-7],
+               "white", 
+               maPalette(low = "white", high = "darkred", k = 7)[-1])
+
+heatmap(ht.data, cexRow = 0.3, cexCol = 0.4, col = my.colors)
+
+# Don't do cluster on rows
+heatmap(ht.data, cexRow = 0.3, cexCol = 0.4, col = my.colors, Rowv = NA)
+# Don't do cluster on columns
+heatmap(ht.data, cexRow = 0.3, cexCol = 0.4, col = my.colors, Colv = NA)
+```
+
+### Color bar for group information
+Add color side bar at th top of columns to distinguish group information by run.
+
+```{r}
+unique(train_anno$Condition)
+group.color <- rep("blue", nrow(imputed_train_abun))
+group.color[train_anno$Condition == "1"] <- "red" 
+group.color[train_anno$Condition == "0.667"] <- "yellow" 
+group.color[train_anno$Condition == "0.5"] <- "orange" 
+heatmap(ht.data, ColSideColors=group.color, col = my.colors, cexRow = 0.3, cexCol = 0.4, Rowv = NA)
+```
+
+### Different distance and clustering
+
+Try different distances calculation and clustering methods. Choice of distance metric or clustering matters!
+
+* Distance options: euclidean (default), maximum, canberra, binary, minkowski, manhattan
+
+* Cluster options: complete (default), single, average, mcquitty, median, centroid, ward
+
+```{r}
+# can change method for distance calculation
+col_distance <- dist(t(ht.data), method = "euclidean")
+# can change clustering method
+col_cluster <- hclust(col_distance, method = "ward.D")
+
+heatmap(ht.data,
+        cexRow = 0.3, cexCol = 0.4, Rowv = NA, 
+        ColSideColors = group.color,
+        col = my.colors,
+        Colv = as.dendrogram(col_cluster)) 
+```
+
+***
+
+## Classification
+
+### Training random forest with all the proteins
+
+Random Forest algorithm can be used for both classification and regression applications. In this tutorial, we will only focus random forest using R for binary classification example. 
+
+Random Forest algorithm is built in **randomForest** package of R and same name function allows us to use the Random Forest in R.
+```{r, warning=FALSE, message=FALSE}
+# Set random seed to make results reproducible:
+set.seed(430)
+#install.packages("randomForest")
+# Load library
+library(randomForest)
+?randomForest
+```
+
+Some of the commonly used parameters of randomForest functions are
+
+- `formula` : Random Forest Formula
+
+- `data`: Input data frame
+
+- `ntree`: Number of decision trees to be grown. Larger the tree, it will be more computationally expensive to build models.
+
+- `mtry`: It refers to how many variables we should select at a node split. Also as mentioned above, the default value is p/3 for regression and sqrt(p) for classification. We should always try to avoid using smaller values of mtry to avoid overfitting.
+
+- `nodesize`: nodesize - It refers to how many observations we want in the terminal nodes. This parameter is directly related to tree depth. Higher the number, lower the tree depth. With lower tree depth, the tree might even fail to recognize useful signals from the data. Defaut is 1 for classification.
+
+- `importance`: Whether independent variable importance in random forest be assessed
+
+Mainly, there are three parameters in the random forest algorithm which you should look at (for tuning): `ntree`, `mtry` and `nodesize`.
+
+```{r}
+# add group information to the training data
+imputed_train_abun$Condition <- droplevels(train_anno$Condition)
+
+# randomForest dosen't allow special symbol in the protein name
+colnames(imputed_train_abun) <- gsub("-", "", colnames(imputed_train_abun))
+
+# fit random forest
+rf=randomForest(Condition ~ . , data = imputed_train_abun, importance=TRUE)
+rf
+```
+
+Variable importance plot is also a useful tool and can be plotted using varImpPlot function. Top 10 proteins are selected and plotted based on Model Accuracy and Gini value. We can also get a table with decreasing order of importance based on a measure (1 for model accuracy and 2 node impurity)
+```{r}
+# plot importance of protiens
+varImpPlot(rf, sort = T, 
+           main="Variable Importance",
+           n.var=10)
+
+# store the importance of proteins 
+var.imp <- data.frame(importance(rf,
+                                 type=2))
+# make row names as columns
+var.imp$Variables <- row.names(var.imp)
+# order the proteins based on their importance
+var.imp <- var.imp[order(var.imp$MeanDecreaseGini,decreasing = T),]
+
+# select top 10 proteins
+biomarkers <- rownames(var.imp)[1:10]
+biomarkers
+```
+
+
+
+### Predict validation cohort
+```{r}
+valid_abun <- quant.pd %>% filter(TechRepMixture == "1") %>% 
+  select(Protein, BioReplicate, Abundance) %>%
+  spread(BioReplicate, Abundance)
+
+# make protein abundance matrix
+proteins <- valid_abun$Protein
+valid_abun <- valid_abun[, -1]
+valid_abun <- t(valid_abun)
+colnames(valid_abun) <- proteins
+dim(valid_abun) # there are 50 rows (each row for subject) and 50 columns (one column per protein)
+
+# get annotation information
+colnames(quant.pd)
+valid_anno <- quant.pd %>% select(BioReplicate, Condition)
+valid_anno <- unique(valid_anno)
+valid_anno <- as.data.frame(valid_anno)
+dim(valid_anno) # there are 50 rows (each row for subject)
+
+valid_abun <- valid_abun[valid_anno$BioReplicate,]
+## remove the normalization channels
+valid_abun <- valid_abun[valid_anno$Condition != "Norm",]
+valid_anno <- valid_anno[valid_anno$Condition != "Norm",]
+
+imputed_valid_abun <- apply(valid_abun, 2, function(x) random.imp(x))
+imputed_valid_abun <- as.data.frame(imputed_valid_abun)
+# randomForest dosen't allow special symbol in the protein name
+colnames(imputed_valid_abun) <- gsub("-", "", colnames(imputed_valid_abun))
+
+# prediction on validation set
+valid_anno$Condition <- droplevels(valid_anno$Condition)
+valid_pred <- predict(rf, imputed_valid_abun)
+
+# Validation set assessment #1: looking at confusion matrix
+table(data=valid_pred,
+      reference=valid_anno$Condition)
+# calculate the predictive accuracy
+misClasificError <- mean(valid_pred != valid_anno$Condition)
+print(paste('Accuracy',1-misClasificError))
+```
+The confusion matrix is a good way of looking at how good our classifier is performing when presented with new data.
+
+***

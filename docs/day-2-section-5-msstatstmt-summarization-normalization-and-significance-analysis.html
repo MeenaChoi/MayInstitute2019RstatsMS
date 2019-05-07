@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 5 Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis | May Institute 2019: Statistics for quantitative mass spsectrometry</title>
+  <meta name="description" content="Chapter 5 Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis | May Institute 2019: Statistics for quantitative mass spsectrometry">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 5 Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis | May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis | May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  
+  
+  
+
+<meta name="author" content="Meena Choi and Ting Huang">
+
+
+<meta name="date" content="2019-05-07">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html">
+<link rel="next" href="day-2-section-6-multivariate-analysis-and-classification.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Before we start</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#suggested-reading"><i class="fa fa-check"></i>Suggested reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><i class="fa fa-check"></i><b>1</b> Day 1 - Section 1 : MSstats, introduction to data and preprocessing</a><ul>
+<li class="chapter" data-level="1.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#objective"><i class="fa fa-check"></i><b>1.1</b> Objective</a></li>
+<li class="chapter" data-level="1.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#workflow-in-msstats"><i class="fa fa-check"></i><b>1.2</b> Workflow in MSstats</a></li>
+<li class="chapter" data-level="1.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#data"><i class="fa fa-check"></i><b>1.3</b> Data</a></li>
+<li class="chapter" data-level="1.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#load-msstats"><i class="fa fa-check"></i><b>1.4</b> Load MSstats</a></li>
+<li class="chapter" data-level="1.5" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#allowable-data-formats"><i class="fa fa-check"></i><b>1.5</b> Allowable data formats</a></li>
+<li class="chapter" data-level="1.6" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#convert-to-msstats-required-format-data-cleaning"><i class="fa fa-check"></i><b>1.6</b> Convert to MSstats required format (Data cleaning)</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#skyline-output"><i class="fa fa-check"></i><b>1.6.1</b> Skyline output</a></li>
+<li class="chapter" data-level="1.6.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#maxquant-output"><i class="fa fa-check"></i><b>1.6.2</b> MaxQuant output</a></li>
+<li class="chapter" data-level="1.6.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#openms-output"><i class="fa fa-check"></i><b>1.6.3</b> OpenMS output</a></li>
+<li class="chapter" data-level="1.6.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#progenesis-output"><i class="fa fa-check"></i><b>1.6.4</b> Progenesis output</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#save-your-work"><i class="fa fa-check"></i><b>1.7</b> Save your work</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><i class="fa fa-check"></i><b>2</b> Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization</a><ul>
+<li class="chapter" data-level="2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#data-1"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-skyline-data"><i class="fa fa-check"></i><b>2.2</b> dataProcess with Skyline data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-msstats-1"><i class="fa fa-check"></i><b>2.2.1</b> Load MSstats</a></li>
+<li class="chapter" data-level="2.2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-the-pre-processed-data-of-skyline-output"><i class="fa fa-check"></i><b>2.2.2</b> Load the pre-processed data of Skyline output</a></li>
+<li class="chapter" data-level="2.2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#normalizing-and-summarizing-data-with-dataprocess"><i class="fa fa-check"></i><b>2.2.3</b> Normalizing and summarizing data with dataProcess</a></li>
+<li class="chapter" data-level="2.2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#visualization-of-processed-data"><i class="fa fa-check"></i><b>2.2.4</b> Visualization of processed data</a></li>
+<li class="chapter" data-level="2.2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-normalization-option"><i class="fa fa-check"></i><b>2.2.5</b> Different normalization option</a></li>
+<li class="chapter" data-level="2.2.6" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-summarization-option"><i class="fa fa-check"></i><b>2.2.6</b> Different summarization option</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-maxquant-data"><i class="fa fa-check"></i><b>2.3</b> dataProcess with MaxQuant data</a></li>
+<li class="chapter" data-level="2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-openms-data"><i class="fa fa-check"></i><b>2.4</b> dataProcess with OpenMS data</a></li>
+<li class="chapter" data-level="2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-progenesis-data"><i class="fa fa-check"></i><b>2.5</b> dataProcess with Progenesis data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><i class="fa fa-check"></i><b>3</b> Day 1 - Section 3 : MSstats, Differential abundance and sample size calculation</a><ul>
+<li class="chapter" data-level="3.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#summary"><i class="fa fa-check"></i><b>3.1</b> Summary</a></li>
+<li class="chapter" data-level="3.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#data-2"><i class="fa fa-check"></i><b>3.2</b> Data</a></li>
+<li class="chapter" data-level="3.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-msstats-2"><i class="fa fa-check"></i><b>3.3</b> Load MSstats</a></li>
+<li class="chapter" data-level="3.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output"><i class="fa fa-check"></i><b>3.4</b> Inference and future design of experiment with Skyline output</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-the-processed-data-output-of-dataprocess-of-skyline-output"><i class="fa fa-check"></i><b>3.4.1</b> Load the processed data (output of <code>dataProcess</code>) of Skyline output</a></li>
+<li class="chapter" data-level="3.4.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#finding-differentially-abundant-proteins-across-conditions"><i class="fa fa-check"></i><b>3.4.2</b> Finding differentially abundant proteins across conditions</a></li>
+<li class="chapter" data-level="3.4.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#visualization-of-differentially-abundant-proteins"><i class="fa fa-check"></i><b>3.4.3</b> Visualization of differentially abundant proteins</a></li>
+<li class="chapter" data-level="3.4.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#planning-future-experimental-designs"><i class="fa fa-check"></i><b>3.4.4</b> Planning future experimental designs</a></li>
+<li class="chapter" data-level="3.4.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#protein-subject-quantification"><i class="fa fa-check"></i><b>3.4.5</b> Protein subject quantification</a></li>
+<li class="chapter" data-level="3.4.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#msstats.log-and-sessioninfo.txt"><i class="fa fa-check"></i><b>3.4.6</b> msstats.log and sessionInfo.txt</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output-1"><i class="fa fa-check"></i><b>3.5</b> Inference and future design of experiment with Skyline output</a></li>
+<li class="chapter" data-level="3.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-openms-output"><i class="fa fa-check"></i><b>3.6</b> Inference and future design of experiment with OpenMS output</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><i class="fa fa-check"></i><b>4</b> Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing</a><ul>
+<li class="chapter" data-level="4.1" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#objective-1"><i class="fa fa-check"></i><b>4.1</b> Objective</a></li>
+<li class="chapter" data-level="4.2" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#data-3"><i class="fa fa-check"></i><b>4.2</b> Data</a></li>
+<li class="chapter" data-level="4.3" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#load-msstatstmt"><i class="fa fa-check"></i><b>4.3</b> Load MSstatsTMT</a></li>
+<li class="chapter" data-level="4.4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#allowable-data-formats-1"><i class="fa fa-check"></i><b>4.4</b> Allowable data formats</a></li>
+<li class="chapter" data-level="4.5" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#proteome-discoverer-output"><i class="fa fa-check"></i><b>4.5</b> Proteome Discoverer output</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#read-data-4"><i class="fa fa-check"></i><b>4.5.1</b> Read data</a></li>
+<li class="chapter" data-level="4.5.2" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#prepare-annotation-file"><i class="fa fa-check"></i><b>4.5.2</b> Prepare annotation file</a></li>
+<li class="chapter" data-level="4.5.3" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preprocessing-with-pdtomsstatstmtformat"><i class="fa fa-check"></i><b>4.5.3</b> Preprocessing with <code>PDtoMSstatsTMTFormat</code></a></li>
+<li class="chapter" data-level="4.5.4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preliminary-check-2"><i class="fa fa-check"></i><b>4.5.4</b> Preliminary check</a></li>
+<li class="chapter" data-level="4.5.5" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#save-your-work-1"><i class="fa fa-check"></i><b>4.5.5</b> Save your work</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#maxquant-output-1"><i class="fa fa-check"></i><b>4.6</b> MaxQuant output</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#read-data-5"><i class="fa fa-check"></i><b>4.6.1</b> Read data</a></li>
+<li class="chapter" data-level="4.6.2" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#set-annotation-file-4"><i class="fa fa-check"></i><b>4.6.2</b> Set annotation file</a></li>
+<li class="chapter" data-level="4.6.3" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preprocessing-with-maxqtomsstatstmtformat"><i class="fa fa-check"></i><b>4.6.3</b> Preprocessing with <code>MaxQtoMSstatsTMTFormat</code></a></li>
+<li class="chapter" data-level="4.6.4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preliminary-check-3"><i class="fa fa-check"></i><b>4.6.4</b> Preliminary check</a></li>
+<li class="chapter" data-level="4.6.5" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#save-your-work-2"><i class="fa fa-check"></i><b>4.6.5</b> Save your work</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><i class="fa fa-check"></i><b>5</b> Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#objective-2"><i class="fa fa-check"></i><b>5.1</b> Objective</a></li>
+<li class="chapter" data-level="5.2" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#data-4"><i class="fa fa-check"></i><b>5.2</b> Data</a></li>
+<li class="chapter" data-level="5.3" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#process-with-processed-pd-data"><i class="fa fa-check"></i><b>5.3</b> Process with processed PD data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#load-the-pre-processed-data-of-pd-output"><i class="fa fa-check"></i><b>5.3.1</b> Load the pre-processed data of PD output</a></li>
+<li class="chapter" data-level="5.3.2" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#normalizing-and-summarizing-data-with-proteinsummarization"><i class="fa fa-check"></i><b>5.3.2</b> Normalizing and summarizing data with proteinSummarization</a></li>
+<li class="chapter" data-level="5.3.3" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#visualization-of-processed-data-1"><i class="fa fa-check"></i><b>5.3.3</b> Visualization of processed data</a></li>
+<li class="chapter" data-level="5.3.4" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#different-parameter-options-for-summarization-and-normalization"><i class="fa fa-check"></i><b>5.3.4</b> Different parameter options for summarization and normalization</a></li>
+<li class="chapter" data-level="5.3.5" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#finding-differentially-abundant-proteins-across-conditions-1"><i class="fa fa-check"></i><b>5.3.5</b> Finding differentially abundant proteins across conditions</a></li>
+<li class="chapter" data-level="5.3.6" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#msstatstmt.log-and-sessioninfo.txt"><i class="fa fa-check"></i><b>5.3.6</b> msstatstmt.log and sessionInfo.txt</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html"><i class="fa fa-check"></i><b>6</b> Day 2 - Section 6 : Multivariate analysis and classification</a><ul>
+<li class="chapter" data-level="6.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#data-5"><i class="fa fa-check"></i><b>6.1</b> Data</a></li>
+<li class="chapter" data-level="6.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#protein-quantification"><i class="fa fa-check"></i><b>6.2</b> Protein quantification</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#read-the-protein-level-data-from-msstatstmt"><i class="fa fa-check"></i><b>6.2.1</b> Read the protein level data from MSstatsTMT</a></li>
+<li class="chapter" data-level="6.2.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#protein-quantification-1"><i class="fa fa-check"></i><b>6.2.2</b> Protein quantification</a></li>
+<li class="chapter" data-level="6.2.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#deal-with-missing-values"><i class="fa fa-check"></i><b>6.2.3</b> Deal with missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#principal-components-analysis-pca"><i class="fa fa-check"></i><b>6.3</b> Principal components analysis (PCA)</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#pca-with-prcomp-function"><i class="fa fa-check"></i><b>6.3.1</b> PCA with <code>prcomp</code> function</a></li>
+<li class="chapter" data-level="6.3.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#check-the-proportion-of-explained-variance"><i class="fa fa-check"></i><b>6.3.2</b> Check the proportion of explained variance</a></li>
+<li class="chapter" data-level="6.3.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#visualization-for-pc1-vs-pc2"><i class="fa fa-check"></i><b>6.3.3</b> Visualization for PC1 vs PC2</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#heatmap"><i class="fa fa-check"></i><b>6.4</b> Heatmap</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#matrix-format"><i class="fa fa-check"></i><b>6.4.1</b> matrix format</a></li>
+<li class="chapter" data-level="6.4.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#heatmap-function-in-base-stats-package"><i class="fa fa-check"></i><b>6.4.2</b> <code>heatmap</code> function in base <code>stats</code> package</a></li>
+<li class="chapter" data-level="6.4.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#color-bar-for-group-information"><i class="fa fa-check"></i><b>6.4.3</b> Color bar for group information</a></li>
+<li class="chapter" data-level="6.4.4" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#different-distance-and-clustering"><i class="fa fa-check"></i><b>6.4.4</b> Different distance and clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#classification"><i class="fa fa-check"></i><b>6.5</b> Classification</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#training-random-forest-with-all-the-proteins"><i class="fa fa-check"></i><b>6.5.1</b> Training random forest with all the proteins</a></li>
+<li class="chapter" data-level="6.5.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#predict-validation-cohort"><i class="fa fa-check"></i><b>6.5.2</b> Predict validation cohort</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">May Institute 2019: Statistics for quantitative mass spsectrometry</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="day-2---section-5-msstatstmt-summarization-normalization-and-significance-analysis" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis</h1>
+<div id="objective-2" class="section level2">
+<h2><span class="header-section-number">5.1</span> Objective</h2>
+<ul>
+<li>Channel-level summarization and normalization between runs</li>
+</ul>
+<p><img src="img/MSstatsTMT_workflow_proteinSum.jpg" style="width:70.0%" /></p>
+<ul>
+<li>Significance analysis for MS proteomics based peak intensities data</li>
+</ul>
+<p><img src="img/MSstatsTMT_workflow_groupComp.jpg" style="width:70.0%" /></p>
+</div>
+<div id="data-4" class="section level2">
+<h2><span class="header-section-number">5.2</span> Data</h2>
+<ul>
+<li>The pre-processed data <code>input.pd.rda</code> from section 4.</li>
+</ul>
+<hr />
+</div>
+<div id="process-with-processed-pd-data" class="section level2">
+<h2><span class="header-section-number">5.3</span> Process with processed PD data</h2>
+<p>Let’s start processing steps. It includes log transformation of intensities, channel-level summarization and normalization between MS runs.</p>
+<hr />
+<p>Load MSstatsTMT first. Then we are ready to start MSstatsTMT.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MSstatsTMT)</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggplot2&#39;:
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">?MSstatsTMT</code></pre>
+<div id="load-the-pre-processed-data-of-pd-output" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Load the pre-processed data of PD output</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&#39;data/data_ProteomeDiscoverer_TMT/input.pd.rda&#39;</span>)</code></pre>
+</div>
+<div id="normalizing-and-summarizing-data-with-proteinsummarization" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Normalizing and summarizing data with proteinSummarization</h3>
+<p><strong>! Always pay attention to the default options </strong></p>
+<p>After reading the datasets, <code>MSstatsTMT</code> performs</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>logarithm transformation of <code>Intensity</code> column</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>channel-level summarization</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>run-to-run normalization for each protein based on reference channel</li>
+</ol></li>
+</ul>
+<p>To get started with this function, visit the help section of <code>proteinSummarization</code> first:</p>
+<pre class="sourceCode r"><code class="sourceCode r">?proteinSummarization </code></pre>
+<div id="default-summarization-and-normalization-options" class="section level4">
+<h4><span class="header-section-number">5.3.2.1</span> Default summarization and normalization options</h4>
+<p><code>proteinSummarization</code> perform first (1) channel level summarization will be performed, which is robust parameter estimation by TMP (Tukey’s median polish).</p>
+<p>Then, (2) normalization between MS runs. TRUE(default) needs at least one normalization channel in each MS run, annotated by ‘Norm’ in Condition column. If there are multiple normalization channels, all the normalization channels are averaged for the normalization. FALSE will not perform normalization step.</p>
+<p>Below show the default for all options in <code>proteinSummarization</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">quant.pd &lt;-<span class="st"> </span><span class="kw">proteinSummarization</span>(<span class="dt">data =</span> input.pd, 
+                             <span class="dt">method =</span> <span class="st">&quot;msstats&quot;</span>, 
+                             <span class="dt">normalization =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save</span>(quant.pd, <span class="dt">file=</span><span class="st">&#39;data/data_ProteomeDiscoverer_TMT/quant.pd.rda&#39;</span>)</code></pre>
+<p>Let’s check output from <code>proteinSummarization</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This table includes normalized channel-level log2 intensities. (column : Abundance)</span>
+<span class="co"># Now one summarized log2 intensities per Protein, Run, Channel.</span>
+<span class="kw">head</span>(quant.pd)</code></pre>
+<pre><code>##                                             Run Protein Abundance Channel
+## 1: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw  A1L0T0  12.26466    127C
+## 2: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw  A1L0T0  12.20385    129N
+## 3: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw  A1L0T0  12.47977    128N
+## 4: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw  A1L0T0  12.25433    129C
+## 5: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw  A1L0T0  12.05181    127N
+## 6: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw  A1L0T0  12.11299    130C
+##      BioReplicate Condition TechRepMixture  Mixture
+## 1: Mixture1_0.125     0.125              1 Mixture1
+## 2: Mixture1_0.125     0.125              1 Mixture1
+## 3:   Mixture1_0.5       0.5              1 Mixture1
+## 4:   Mixture1_0.5       0.5              1 Mixture1
+## 5: Mixture1_0.667     0.667              1 Mixture1
+## 6: Mixture1_0.667     0.667              1 Mixture1</code></pre>
+<hr />
+</div>
+</div>
+<div id="visualization-of-processed-data-1" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> Visualization of processed data</h3>
+<div id="profile-plots-1" class="section level4">
+<h4><span class="header-section-number">5.3.3.1</span> Profile plots</h4>
+<p>Profile plot is good visualization to check individual measurements. Each dot means one intensity per Run per Channel. Each panel represents one MS run and each dot within one panel is one channel within one Run. The dots are linked with line per feature. If line is disconnected, that means there is no value (missing value). Color means different peptides and charge stages.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if you have many MS runs, adjust width of plot (make wider)</span>
+<span class="co"># Profile plot for the normalized data </span>
+<span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm=</span>input.pd, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization=</span>quant.pd, <span class="co"># protein-level data</span>
+                     <span class="dt">type=</span><span class="st">&#39;ProfilePlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/pd_norm_&quot;</span>) </code></pre>
+<p><code>pd_norm_ProfilePlot.pdf</code> and <code>pd_norm_ProfilePlot_wSummarization.pdf</code> are generated in the current directory.</p>
+<p>Then, Let’s go though profile plots to see overall quality of data.</p>
+<p>There are two pdfs for each protein, first is profile plot and second plot is profile plot with summarized and normalized data. This profile plot shows each peptide ions across runs and channels, grouped per condition. Each peptide has a different colour/type layout.</p>
+<p><img src="img/pd_norm_ProfilePlot_1.jpg" /></p>
+<p>This plot shows the same peptide ions in grey, with the values as summarized by the model overlayed in red.</p>
+<p><img src="img/pd_norm_ProfilePlot_wSummarization_1.jpg" /></p>
+<p>Instead of making all profile plots for all proteins, we can make plot for individual protein. Here is the example of background protein, <code>P35221</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm=</span>input.pd, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization=</span>quant.pd, <span class="co"># protein-level data</span>
+                     <span class="dt">type=</span><span class="st">&#39;ProfilePlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                     <span class="dt">which.Protein =</span> <span class="st">&#39;P35221&#39;</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/pd_norm_P35221_&quot;</span>) </code></pre>
+<p><img src="img/pd_norm_P35221_ProfilePlot.png" /></p>
+<p><img src="img/pd_norm_P35221_ProfilePlot_wSummarization.png" /></p>
+</div>
+<div id="quality-control-plots-1" class="section level4">
+<h4><span class="header-section-number">5.3.3.2</span> Quality control plots</h4>
+<p>QC plot is good to see the distribution of peptide intensities per MS run and channels, and outliers.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># QC plot for peptide intensity data</span>
+<span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm=</span>input.pd, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization=</span>quant.pd, <span class="co"># protein-level data</span>
+                     <span class="dt">type=</span><span class="st">&#39;QCPlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/pd_&quot;</span>) </code></pre>
+<p>Then, <code>pd_QCPlot.pdf</code> are generated in the current directory.</p>
+<p><img src="img/pd_QCPlot_all.jpg" /></p>
+<blockquote>
+<p><strong>Challenge</strong></p>
+<p>This is the study design. Let’s check visualization for other 3 proteins.
+1. P02788ups
+2. P02787ups
+3. P26639</p>
+</blockquote>
+<hr />
+</div>
+</div>
+<div id="different-parameter-options-for-summarization-and-normalization" class="section level3">
+<h3><span class="header-section-number">5.3.4</span> Different parameter options for summarization and normalization</h3>
+<div id="no-normalization-1" class="section level4">
+<h4><span class="header-section-number">5.3.4.1</span> No normalization</h4>
+<p>No normalization is performed. If you don’t want to do run-to-run normalization, you should use like below.</p>
+<pre class="sourceCode r"><code class="sourceCode r">quant.pd.nonorm &lt;-<span class="kw">proteinSummarization</span>(<span class="dt">data =</span> input.pd, 
+                             <span class="dt">method =</span> <span class="st">&quot;msstats&quot;</span>, 
+                             <span class="dt">normalization =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm =</span> input.pd, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization =</span> quant.pd.nonorm, <span class="co"># protein-level data</span>
+                     <span class="dt">type =</span> <span class="st">&#39;ProfilePlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                    <span class="dt">originalPlot =</span> <span class="ot">FALSE</span>,
+                     <span class="dt">which.Protein =</span> <span class="st">&#39;P35221&#39;</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/pd_noNorm_P35221_&quot;</span>) </code></pre>
+<p><img src="img/pd_noNorm_P35221_ProfilePlot_wSummarization.png" /></p>
+</div>
+<div id="different-summarization-option-1" class="section level4">
+<h4><span class="header-section-number">5.3.4.2</span> Different summarization option</h4>
+<p>MSstatsTMT provides five different summarization methods for protein quantification. <code>msstats</code> is default, which we have used before. Now let’s try another robust summarization method <code>Median</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">quant.pd.median &lt;-<span class="kw">proteinSummarization</span>(<span class="dt">data =</span> input.pd, 
+                             <span class="dt">method =</span> <span class="st">&quot;Median&quot;</span>, 
+                             <span class="dt">normalization =</span> <span class="ot">TRUE</span>)</code></pre>
+<p>Run summarization is different.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm=</span>input.pd, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization=</span>quant.pd.median, <span class="co"># protein-level data</span>
+                     <span class="dt">type=</span><span class="st">&#39;ProfilePlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                    <span class="dt">originalPlot =</span> <span class="ot">FALSE</span>,
+                     <span class="dt">which.Protein =</span> <span class="st">&#39;P35221&#39;</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/pd_median_P35221_&quot;</span>) </code></pre>
+<p><img src="img/pd_median_P35221_ProfilePlot_wSummarization.png" /></p>
+<hr />
+</div>
+</div>
+<div id="finding-differentially-abundant-proteins-across-conditions-1" class="section level3">
+<h3><span class="header-section-number">5.3.5</span> Finding differentially abundant proteins across conditions</h3>
+<div id="assign-contrast-matrix-1" class="section level4">
+<h4><span class="header-section-number">5.3.5.1</span> Assign contrast matrix</h4>
+<p>After we summarized each protein’s behavior across conditions and normalized the data between runs in <code>proteinSummarization</code> step, we are all set to compare protein changes between groups of conditions. Within MSstatsTMT we can do this with the <code>groupComparisonTMT</code> function, which takes as input the output of the <code>proteinSummarization</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r">?groupComparisonTMT</code></pre>
+<p>We have to tell <code>groupComparisonTMT</code> which are the conditions we would like to compare.
+You can make your <code>contrast.matrix</code> in R in a text editor. We define our contrast matrix by adding a column for every condition. We add a row for every comparison we would like to make between groups of conditions.</p>
+<p><strong>0</strong> is for conditions we would like to ignore.
+<strong>1</strong> is for conditions we would like to put in the numerator of the ratio or fold-change.
+<strong>-1</strong> is for conditions we would like to put in the denumerator of the ratio or fold-change.</p>
+<p>If you have multiple groups, you can assign any group comparisons you are interested in.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check unique conditions and check order of condition information</span>
+<span class="co"># In this case, four different concentrations</span>
+<span class="kw">unique</span>(quant.pd<span class="op">$</span>Condition)</code></pre>
+<pre><code>## [1] 0.125 0.5   0.667 1     Norm 
+## Levels: 0.125 0.5 0.667 1 Norm</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;Norm&#39; will be removed during tesing and should be not considered in the contrast</span>
+comparison1&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">1</span>) <span class="co"># 0.5-0.125</span>
+comparison2&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="dt">nrow=</span><span class="dv">1</span>) <span class="co"># 0.667-0.5</span>
+comparison&lt;-<span class="kw">rbind</span>(comparison1, comparison2)
+<span class="co"># Set the column names</span>
+<span class="kw">colnames</span>(comparison)&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;0.125&quot;</span>, <span class="st">&quot;0.5&quot;</span>, <span class="st">&quot;0.667&quot;</span>, <span class="st">&quot;1&quot;</span>)
+<span class="co"># Set the names of each row</span>
+<span class="kw">row.names</span>(comparison)&lt;-<span class="kw">c</span>(<span class="st">&quot;1-0.125&quot;</span>,<span class="st">&quot;0.667-0.5&quot;</span>)
+
+comparison</code></pre>
+<pre><code>##           0.125 0.5 0.667 1
+## 1-0.125      -1   0     0 1
+## 0.667-0.5     0  -1     1 0</code></pre>
+<blockquote>
+<p><strong>Challenges</strong></p>
+<p>Make the matrix, named <code>comparison</code>, for all 6 paired comparision among 4 conditions (condition1, condition2, condition3, condition4)</p>
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(quant.pd<span class="op">$</span>Condition)</code></pre>
+<pre><code>## [1] 0.125 0.5   0.667 1     Norm 
+## Levels: 0.125 0.5 0.667 1 Norm</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">comparison1&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dt">nrow=</span><span class="dv">1</span>)
+comparison2&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="dt">nrow=</span><span class="dv">1</span>)
+comparison3&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">1</span>)
+comparison4&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="dt">nrow=</span><span class="dv">1</span>)
+comparison5&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">1</span>)
+comparison6&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">1</span>)
+comparison_all&lt;-<span class="kw">rbind</span>(comparison1, comparison2, comparison3, comparison4, comparison5, comparison6)
+<span class="co"># Set the column names</span>
+<span class="kw">colnames</span>(comparison_all)&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;0.125&quot;</span>, <span class="st">&quot;0.5&quot;</span>, <span class="st">&quot;0.667&quot;</span>, <span class="st">&quot;1&quot;</span>)
+<span class="co"># Set the names of each row</span>
+<span class="kw">row.names</span>(comparison_all)&lt;-<span class="kw">c</span>(<span class="st">&quot;0.5-0.125&quot;</span>,<span class="st">&quot;0.667-0.125&quot;</span>,<span class="st">&quot;1-0.125&quot;</span>,<span class="st">&quot;0.667-0.5&quot;</span>,<span class="st">&quot;1-0.5&quot;</span>,<span class="st">&quot;1-0.667&quot;</span>)
+comparison_all</code></pre>
+<pre><code>##             0.125 0.5 0.667 1
+## 0.5-0.125      -1   1     0 0
+## 0.667-0.125    -1   0     1 0
+## 1-0.125        -1   0     0 1
+## 0.667-0.5       0  -1     1 0
+## 1-0.5           0  -1     0 1
+## 1-0.667         0   0    -1 1</code></pre>
+</div>
+<div id="group-comparisons-with-groupcomparisontmt" class="section level4">
+<h4><span class="header-section-number">5.3.5.2</span> Group comparisons with <code>groupComparisonTMT</code></h4>
+<p><code>groupComparisonTMT</code> uses the channel-level summarized data for hypothesis testing.</p>
+<pre class="sourceCode r"><code class="sourceCode r">test.pd &lt;-<span class="st"> </span><span class="kw">groupComparisonTMT</span>(<span class="dt">data =</span> quant.pd, 
+                               <span class="dt">contrast.matrix =</span> comparison,
+                               <span class="dt">remove_norm_channel =</span> <span class="ot">TRUE</span>, <span class="co"># remove norm channels</span>
+                               <span class="dt">moderated =</span> <span class="ot">TRUE</span>, <span class="co"># do moderated t test</span>
+                               <span class="dt">adj.method =</span> <span class="st">&quot;BH&quot;</span>) <span class="co"># multiple comparison adjustment</span></code></pre>
+<p>Let’s check the output.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(test.pd)</code></pre>
+<pre><code>## [1] &quot;Protein&quot;    &quot;Label&quot;      &quot;log2FC&quot;     &quot;SE&quot;         &quot;DF&quot;        
+## [6] &quot;pvalue&quot;     &quot;adj.pvalue&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show test result</span>
+<span class="co"># Label : which comparison is used</span>
+<span class="co"># log2FC : estimated log2 fold change between two conditions (the contrast)</span>
+<span class="co"># adj.pvalue : adjusted p value</span>
+<span class="kw">head</span>(test.pd)</code></pre>
+<pre><code>##   Protein     Label      log2FC         SE       DF     pvalue adj.pvalue
+## 1  A1L0T0   1-0.125  0.07999809 0.04407490 105.9517 0.07234539  0.2127806
+## 2  A1L0T0 0.667-0.5 -0.04897305 0.04407490 105.9517 0.26902646  0.4352093
+## 3  O00625   1-0.125  0.02751219 0.01930260 105.9517 0.15700684  0.3568337
+## 4  O00625 0.667-0.5 -0.02494449 0.01930260 105.9517 0.19906924  0.3981385
+## 5  O60427   1-0.125  0.04234680 0.02688754 105.9517 0.11824700  0.3284639
+## 6  O60427 0.667-0.5  0.01193862 0.02688754 105.9517 0.65793338  0.8023578</code></pre>
+</div>
+<div id="save-the-comparison-result-1" class="section level4">
+<h4><span class="header-section-number">5.3.5.3</span> Save the comparison result</h4>
+<p>Let’s save the testing result as .csv file.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save</span>(test.pd, <span class="dt">file=</span><span class="st">&#39;data/data_ProteomeDiscoverer_TMT/pd.result.rda&#39;</span>)
+<span class="kw">write.csv</span>(test.pd, <span class="dt">file=</span><span class="st">&#39;data/data_ProteomeDiscoverer_TMT/testResult_pd.csv&#39;</span>)</code></pre>
+</div>
+<div id="significant-tests" class="section level4">
+<h4><span class="header-section-number">5.3.5.4</span> Significant tests</h4>
+<p>Let’s inspect the results to see what proteins are changing significantly between two concentrations.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(test.pd)</code></pre>
+<pre><code>##   Protein     Label      log2FC         SE       DF     pvalue adj.pvalue
+## 1  A1L0T0   1-0.125  0.07999809 0.04407490 105.9517 0.07234539  0.2127806
+## 2  A1L0T0 0.667-0.5 -0.04897305 0.04407490 105.9517 0.26902646  0.4352093
+## 3  O00625   1-0.125  0.02751219 0.01930260 105.9517 0.15700684  0.3568337
+## 4  O00625 0.667-0.5 -0.02494449 0.01930260 105.9517 0.19906924  0.3981385
+## 5  O60427   1-0.125  0.04234680 0.02688754 105.9517 0.11824700  0.3284639
+## 6  O60427 0.667-0.5  0.01193862 0.02688754 105.9517 0.65793338  0.8023578</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select subset of rows with adj.pvalue &lt; 0.05</span>
+SignificantProteins &lt;-<span class="st"> </span>
+<span class="st">  </span>test.pd[test.pd<span class="op">$</span>adj.pvalue <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.05</span> ,]
+
+SignificantProteins</code></pre>
+<pre><code>##        Protein     Label    log2FC         SE        DF       pvalue
+## 7    P00915ups   1-0.125 1.9194954 0.05722839  84.95168 8.945464e-51
+## 8    P00915ups 0.667-0.5 0.2749177 0.05722839  84.95168 6.627634e-06
+## 9    P01008ups   1-0.125 2.1144893 0.06806652  84.95168 3.713705e-48
+## 10   P01008ups 0.667-0.5 0.2896649 0.06806652  84.95168 5.344220e-05
+## 11   P01031ups   1-0.125 1.8041566 0.11087020  68.95168 2.618058e-25
+## 12   P01031ups 0.667-0.5 0.4107830 0.10542938  68.95168 2.234092e-04
+## 13   P01344ups   1-0.125 2.0688076 0.06904749  91.95168 3.130553e-49
+## 14   P01344ups 0.667-0.5 0.3713574 0.06904749  91.95168 5.682775e-07
+## 15   P01375ups   1-0.125 2.5243218 0.08825488  77.95168 4.360217e-43
+## 16   P01375ups 0.667-0.5 0.3386098 0.08825488  77.95168 2.517549e-04
+## 17   P01579ups   1-0.125 1.6369755 0.09944662  77.95168 4.355455e-27
+## 19   P02741ups   1-0.125 1.8161644 0.06738557  77.95168 2.947523e-41
+## 20   P02741ups 0.667-0.5 0.3161686 0.06738557  77.95168 1.135753e-05
+## 21   P02753ups   1-0.125 1.5937054 0.08948401  77.95168 3.355143e-29
+## 22   P02753ups 0.667-0.5 0.2909960 0.08948401  77.95168 1.694685e-03
+## 23   P02787ups   1-0.125 2.0540332 0.03904033 105.95168 9.144927e-78
+## 24   P02787ups 0.667-0.5 0.2987191 0.03904033 105.95168 9.649755e-12
+## 25   P02788ups   1-0.125 1.8663815 0.03138725  98.95168 2.995382e-79
+## 26   P02788ups 0.667-0.5 0.2883261 0.03138725  98.95168 6.544522e-15
+## 29   P05413ups   1-0.125 2.0644363 0.08101181 105.95168 5.372994e-47
+## 30   P05413ups 0.667-0.5 0.2541415 0.08101181 105.95168 2.209538e-03
+## 33 P10636-8ups   1-0.125 2.4076666 0.09799311 103.95168 4.284414e-45
+## 34 P10636-8ups 0.667-0.5 0.4545902 0.09628875 103.95168 7.354719e-06
+## 45   P62988ups   1-0.125 0.3426051 0.03193782 105.95168 1.286571e-18
+## 49   P68871ups   1-0.125 2.4318364 0.06435396 104.95168 6.249411e-63
+## 50   P68871ups 0.667-0.5 0.2824179 0.06380626 104.95168 2.355015e-05
+## 97   P02144ups   1-0.125 2.0888596 0.06699695  70.95168 3.779206e-43
+## 98   P02144ups 0.667-0.5 0.2559477 0.06699695  70.95168 2.828965e-04
+##      adj.pvalue
+## 7  1.118183e-49
+## 8  7.354719e-05
+## 9  3.094754e-47
+## 10 3.340138e-04
+## 11 9.350206e-25
+## 12 1.241162e-03
+## 13 3.130553e-48
+## 14 9.471292e-06
+## 15 2.180109e-42
+## 16 1.258775e-03
+## 17 1.675175e-26
+## 19 1.339783e-40
+## 20 9.464611e-05
+## 21 1.397976e-28
+## 22 7.061187e-03
+## 23 2.286232e-76
+## 24 2.412439e-10
+## 25 1.497691e-77
+## 26 3.272261e-13
+## 29 3.837853e-46
+## 30 8.498222e-03
+## 33 2.677759e-44
+## 34 7.354719e-05
+## 45 4.288570e-18
+## 49 1.041569e-61
+## 50 1.682154e-04
+## 97 2.099559e-42
+## 98 1.285893e-03</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(SignificantProteins)</code></pre>
+<pre><code>## [1] 28</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select subset of rows with adj.pvalue &lt; 0.05 and absoluate log2FC &gt; 1</span>
+SignificantProteinsLargeFC &lt;-<span class="st"> </span>SignificantProteins[<span class="kw">abs</span>(SignificantProteins<span class="op">$</span>log2FC) <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> ,]
+SignificantProteinsLargeFC</code></pre>
+<pre><code>##        Protein   Label   log2FC         SE        DF       pvalue
+## 7    P00915ups 1-0.125 1.919495 0.05722839  84.95168 8.945464e-51
+## 9    P01008ups 1-0.125 2.114489 0.06806652  84.95168 3.713705e-48
+## 11   P01031ups 1-0.125 1.804157 0.11087020  68.95168 2.618058e-25
+## 13   P01344ups 1-0.125 2.068808 0.06904749  91.95168 3.130553e-49
+## 15   P01375ups 1-0.125 2.524322 0.08825488  77.95168 4.360217e-43
+## 17   P01579ups 1-0.125 1.636975 0.09944662  77.95168 4.355455e-27
+## 19   P02741ups 1-0.125 1.816164 0.06738557  77.95168 2.947523e-41
+## 21   P02753ups 1-0.125 1.593705 0.08948401  77.95168 3.355143e-29
+## 23   P02787ups 1-0.125 2.054033 0.03904033 105.95168 9.144927e-78
+## 25   P02788ups 1-0.125 1.866381 0.03138725  98.95168 2.995382e-79
+## 29   P05413ups 1-0.125 2.064436 0.08101181 105.95168 5.372994e-47
+## 33 P10636-8ups 1-0.125 2.407667 0.09799311 103.95168 4.284414e-45
+## 49   P68871ups 1-0.125 2.431836 0.06435396 104.95168 6.249411e-63
+## 97   P02144ups 1-0.125 2.088860 0.06699695  70.95168 3.779206e-43
+##      adj.pvalue
+## 7  1.118183e-49
+## 9  3.094754e-47
+## 11 9.350206e-25
+## 13 3.130553e-48
+## 15 2.180109e-42
+## 17 1.675175e-26
+## 19 1.339783e-40
+## 21 1.397976e-28
+## 23 2.286232e-76
+## 25 1.497691e-77
+## 29 3.837853e-46
+## 33 2.677759e-44
+## 49 1.041569e-61
+## 97 2.099559e-42</code></pre>
+</div>
+<div id="different-parameter-options-for-group-comparison" class="section level4">
+<h4><span class="header-section-number">5.3.5.5</span> Different parameter options for group comparison</h4>
+<p>If you want to make all the pairwise comparison,<code>MSstatsTMT</code> has an easy option for it. Setting <code>contrast.matrix = pairwise</code> compares all the possible pairs between two conditions.</p>
+<pre class="sourceCode r"><code class="sourceCode r">test.pd.pairwise &lt;-<span class="st"> </span><span class="kw">groupComparisonTMT</span>(<span class="dt">data =</span> quant.pd, 
+                               <span class="dt">contrast.matrix =</span> <span class="st">&quot;pairwise&quot;</span>,
+                               <span class="dt">remove_norm_channel =</span> <span class="ot">TRUE</span>, <span class="co"># remove norm channels</span>
+                               <span class="dt">moderated =</span> <span class="ot">TRUE</span>, <span class="co"># do moderated t test</span>
+                               <span class="dt">adj.method =</span> <span class="st">&quot;BH&quot;</span>) <span class="co"># multiple comparison adjustment</span>
+
+<span class="co"># show the comparisons</span>
+<span class="kw">unique</span>(test.pd.pairwise<span class="op">$</span>Label)</code></pre>
+<pre><code>## [1] &quot;0.125-0.5&quot;   &quot;0.125-0.667&quot; &quot;0.125-1&quot;     &quot;0.5-0.667&quot;   &quot;0.5-1&quot;      
+## [6] &quot;0.667-1&quot;</code></pre>
+</div>
+</div>
+<div id="msstatstmt.log-and-sessioninfo.txt" class="section level3">
+<h3><span class="header-section-number">5.3.6</span> msstatstmt.log and sessionInfo.txt</h3>
+<p>These two files are important to keep the records of package versions and options in functions.</p>
+<blockquote>
+<p><strong>Challenges</strong></p>
+<ol style="list-style-type: decimal">
+<li>Try <code>proteinSummarization</code> with <code>msstats</code> summarization and between-runs normalization for MaxQuant output. (<code>input.maxquant.rda</code> from section 4)</li>
+</ol>
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&#39;data/data_MaxQuant_TMT/input.maxquant.rda&#39;</span>)
+quant.maxquant &lt;-<span class="kw">proteinSummarization</span>(<span class="dt">data =</span> input.maxquant, 
+                             <span class="dt">method =</span> <span class="st">&quot;msstats&quot;</span>, 
+                             <span class="dt">normalization =</span> <span class="ot">TRUE</span>)</code></pre>
+<blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Try <code>proteinSummarization</code> with <code>msstats</code> summarization and without normalization for MaxQuant output. (<code>input.maxquant.rda</code> from section 4)</li>
+</ol>
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r">quant.maxquant.nonorm &lt;-<span class="kw">proteinSummarization</span>(<span class="dt">data =</span> input.maxquant, 
+                             <span class="dt">method =</span> <span class="st">&quot;msstats&quot;</span>, 
+                             <span class="dt">normalization =</span> <span class="ot">FALSE</span>)</code></pre>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Draw Profile plots of protein <code>P26639</code>, for both cases above and compare.</li>
+</ol>
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm=</span>input.maxquant, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization=</span>quant.maxquant, <span class="co"># protein-level data</span>
+                     <span class="dt">type=</span><span class="st">&#39;ProfilePlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                     <span class="dt">which.Protein =</span> <span class="st">&#39;P26639&#39;</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_MaxQuant_TMT/maxquant_norm_P26639_&quot;</span>)
+<span class="kw">dataProcessPlotsTMT</span>(<span class="dt">data.psm=</span>input.maxquant, <span class="co"># PSM-level data</span>
+                     <span class="dt">data.summarization=</span>quant.maxquant.nonorm, <span class="co"># protein-level data</span>
+                     <span class="dt">type=</span><span class="st">&#39;ProfilePlot&#39;</span>, <span class="co"># choice of visualization</span>
+                     <span class="dt">width =</span> <span class="dv">15</span>,
+                     <span class="dt">height =</span> <span class="dv">5</span>,
+                     <span class="dt">originalPlot =</span> <span class="ot">FALSE</span>,
+                     <span class="dt">which.Protein =</span> <span class="st">&#39;P26639&#39;</span>,
+                     <span class="dt">address=</span><span class="st">&quot;data/data_MaxQuant_TMT/maxquant_nonorm_P26639_&quot;</span>)</code></pre>
+<blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>From <code>quant.maxquant</code> data, find the differentially abundant comparisons using <code>groupComparison</code> with the same <code>comparison</code> matrix.</li>
+</ol>
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r">test.maxquant &lt;-<span class="st"> </span><span class="kw">groupComparisonTMT</span>(<span class="dt">data =</span> quant.maxquant, <span class="dt">contrast.matrix =</span> comparison)
+<span class="kw">write.csv</span>(test.maxquant, <span class="dt">file=</span><span class="st">&#39;data/data_MaxQuant_TMT/testResult_maxquant.csv&#39;</span>)</code></pre>
+<hr />
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="day-2-section-6-multivariate-analysis-and-classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/MayInst_P6_day2_sec5.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

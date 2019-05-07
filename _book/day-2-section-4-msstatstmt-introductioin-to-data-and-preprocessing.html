@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 4 Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing | May Institute 2019: Statistics for quantitative mass spsectrometry</title>
+  <meta name="description" content="Chapter 4 Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing | May Institute 2019: Statistics for quantitative mass spsectrometry">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 4 Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing | May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing | May Institute 2019: Statistics for quantitative mass spsectrometry" />
+  
+  
+  
+
+<meta name="author" content="Meena Choi and Ting Huang">
+
+
+<meta name="date" content="2019-05-07">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html">
+<link rel="next" href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Before we start</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#suggested-reading"><i class="fa fa-check"></i>Suggested reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><i class="fa fa-check"></i><b>1</b> Day 1 - Section 1 : MSstats, introduction to data and preprocessing</a><ul>
+<li class="chapter" data-level="1.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#objective"><i class="fa fa-check"></i><b>1.1</b> Objective</a></li>
+<li class="chapter" data-level="1.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#workflow-in-msstats"><i class="fa fa-check"></i><b>1.2</b> Workflow in MSstats</a></li>
+<li class="chapter" data-level="1.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#data"><i class="fa fa-check"></i><b>1.3</b> Data</a></li>
+<li class="chapter" data-level="1.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#load-msstats"><i class="fa fa-check"></i><b>1.4</b> Load MSstats</a></li>
+<li class="chapter" data-level="1.5" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#allowable-data-formats"><i class="fa fa-check"></i><b>1.5</b> Allowable data formats</a></li>
+<li class="chapter" data-level="1.6" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#convert-to-msstats-required-format-data-cleaning"><i class="fa fa-check"></i><b>1.6</b> Convert to MSstats required format (Data cleaning)</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#skyline-output"><i class="fa fa-check"></i><b>1.6.1</b> Skyline output</a></li>
+<li class="chapter" data-level="1.6.2" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#maxquant-output"><i class="fa fa-check"></i><b>1.6.2</b> MaxQuant output</a></li>
+<li class="chapter" data-level="1.6.3" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#openms-output"><i class="fa fa-check"></i><b>1.6.3</b> OpenMS output</a></li>
+<li class="chapter" data-level="1.6.4" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#progenesis-output"><i class="fa fa-check"></i><b>1.6.4</b> Progenesis output</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html"><a href="day-1-section-1-msstats-introduction-to-data-and-preprocessing.html#save-your-work"><i class="fa fa-check"></i><b>1.7</b> Save your work</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><i class="fa fa-check"></i><b>2</b> Day 1 - Section 2 : MSstats, Data processing - Normalization and run summarization</a><ul>
+<li class="chapter" data-level="2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#data-1"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-skyline-data"><i class="fa fa-check"></i><b>2.2</b> dataProcess with Skyline data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-msstats-1"><i class="fa fa-check"></i><b>2.2.1</b> Load MSstats</a></li>
+<li class="chapter" data-level="2.2.2" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#load-the-pre-processed-data-of-skyline-output"><i class="fa fa-check"></i><b>2.2.2</b> Load the pre-processed data of Skyline output</a></li>
+<li class="chapter" data-level="2.2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#normalizing-and-summarizing-data-with-dataprocess"><i class="fa fa-check"></i><b>2.2.3</b> Normalizing and summarizing data with dataProcess</a></li>
+<li class="chapter" data-level="2.2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#visualization-of-processed-data"><i class="fa fa-check"></i><b>2.2.4</b> Visualization of processed data</a></li>
+<li class="chapter" data-level="2.2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-normalization-option"><i class="fa fa-check"></i><b>2.2.5</b> Different normalization option</a></li>
+<li class="chapter" data-level="2.2.6" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#different-summarization-option"><i class="fa fa-check"></i><b>2.2.6</b> Different summarization option</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-maxquant-data"><i class="fa fa-check"></i><b>2.3</b> dataProcess with MaxQuant data</a></li>
+<li class="chapter" data-level="2.4" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-openms-data"><i class="fa fa-check"></i><b>2.4</b> dataProcess with OpenMS data</a></li>
+<li class="chapter" data-level="2.5" data-path="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html"><a href="day-1-section-2-msstats-data-processing-normalization-and-run-summarization.html#dataprocess-with-progenesis-data"><i class="fa fa-check"></i><b>2.5</b> dataProcess with Progenesis data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><i class="fa fa-check"></i><b>3</b> Day 1 - Section 3 : MSstats, Differential abundance and sample size calculation</a><ul>
+<li class="chapter" data-level="3.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#summary"><i class="fa fa-check"></i><b>3.1</b> Summary</a></li>
+<li class="chapter" data-level="3.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#data-2"><i class="fa fa-check"></i><b>3.2</b> Data</a></li>
+<li class="chapter" data-level="3.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-msstats-2"><i class="fa fa-check"></i><b>3.3</b> Load MSstats</a></li>
+<li class="chapter" data-level="3.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output"><i class="fa fa-check"></i><b>3.4</b> Inference and future design of experiment with Skyline output</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#load-the-processed-data-output-of-dataprocess-of-skyline-output"><i class="fa fa-check"></i><b>3.4.1</b> Load the processed data (output of <code>dataProcess</code>) of Skyline output</a></li>
+<li class="chapter" data-level="3.4.2" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#finding-differentially-abundant-proteins-across-conditions"><i class="fa fa-check"></i><b>3.4.2</b> Finding differentially abundant proteins across conditions</a></li>
+<li class="chapter" data-level="3.4.3" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#visualization-of-differentially-abundant-proteins"><i class="fa fa-check"></i><b>3.4.3</b> Visualization of differentially abundant proteins</a></li>
+<li class="chapter" data-level="3.4.4" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#planning-future-experimental-designs"><i class="fa fa-check"></i><b>3.4.4</b> Planning future experimental designs</a></li>
+<li class="chapter" data-level="3.4.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#protein-subject-quantification"><i class="fa fa-check"></i><b>3.4.5</b> Protein subject quantification</a></li>
+<li class="chapter" data-level="3.4.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#msstats.log-and-sessioninfo.txt"><i class="fa fa-check"></i><b>3.4.6</b> msstats.log and sessionInfo.txt</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-skyline-output-1"><i class="fa fa-check"></i><b>3.5</b> Inference and future design of experiment with Skyline output</a></li>
+<li class="chapter" data-level="3.6" data-path="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html"><a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html#inference-and-future-design-of-experiment-with-openms-output"><i class="fa fa-check"></i><b>3.6</b> Inference and future design of experiment with OpenMS output</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><i class="fa fa-check"></i><b>4</b> Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing</a><ul>
+<li class="chapter" data-level="4.1" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#objective-1"><i class="fa fa-check"></i><b>4.1</b> Objective</a></li>
+<li class="chapter" data-level="4.2" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#data-3"><i class="fa fa-check"></i><b>4.2</b> Data</a></li>
+<li class="chapter" data-level="4.3" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#load-msstatstmt"><i class="fa fa-check"></i><b>4.3</b> Load MSstatsTMT</a></li>
+<li class="chapter" data-level="4.4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#allowable-data-formats-1"><i class="fa fa-check"></i><b>4.4</b> Allowable data formats</a></li>
+<li class="chapter" data-level="4.5" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#proteome-discoverer-output"><i class="fa fa-check"></i><b>4.5</b> Proteome Discoverer output</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#read-data-4"><i class="fa fa-check"></i><b>4.5.1</b> Read data</a></li>
+<li class="chapter" data-level="4.5.2" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#prepare-annotation-file"><i class="fa fa-check"></i><b>4.5.2</b> Prepare annotation file</a></li>
+<li class="chapter" data-level="4.5.3" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preprocessing-with-pdtomsstatstmtformat"><i class="fa fa-check"></i><b>4.5.3</b> Preprocessing with <code>PDtoMSstatsTMTFormat</code></a></li>
+<li class="chapter" data-level="4.5.4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preliminary-check-2"><i class="fa fa-check"></i><b>4.5.4</b> Preliminary check</a></li>
+<li class="chapter" data-level="4.5.5" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#save-your-work-1"><i class="fa fa-check"></i><b>4.5.5</b> Save your work</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#maxquant-output-1"><i class="fa fa-check"></i><b>4.6</b> MaxQuant output</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#read-data-5"><i class="fa fa-check"></i><b>4.6.1</b> Read data</a></li>
+<li class="chapter" data-level="4.6.2" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#set-annotation-file-4"><i class="fa fa-check"></i><b>4.6.2</b> Set annotation file</a></li>
+<li class="chapter" data-level="4.6.3" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preprocessing-with-maxqtomsstatstmtformat"><i class="fa fa-check"></i><b>4.6.3</b> Preprocessing with <code>MaxQtoMSstatsTMTFormat</code></a></li>
+<li class="chapter" data-level="4.6.4" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#preliminary-check-3"><i class="fa fa-check"></i><b>4.6.4</b> Preliminary check</a></li>
+<li class="chapter" data-level="4.6.5" data-path="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html"><a href="day-2-section-4-msstatstmt-introductioin-to-data-and-preprocessing.html#save-your-work-2"><i class="fa fa-check"></i><b>4.6.5</b> Save your work</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><i class="fa fa-check"></i><b>5</b> Day 2 - Section 5 : MSstatsTMT, summarization, normalization and significance analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#objective-2"><i class="fa fa-check"></i><b>5.1</b> Objective</a></li>
+<li class="chapter" data-level="5.2" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#data-4"><i class="fa fa-check"></i><b>5.2</b> Data</a></li>
+<li class="chapter" data-level="5.3" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#process-with-processed-pd-data"><i class="fa fa-check"></i><b>5.3</b> Process with processed PD data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#load-the-pre-processed-data-of-pd-output"><i class="fa fa-check"></i><b>5.3.1</b> Load the pre-processed data of PD output</a></li>
+<li class="chapter" data-level="5.3.2" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#normalizing-and-summarizing-data-with-proteinsummarization"><i class="fa fa-check"></i><b>5.3.2</b> Normalizing and summarizing data with proteinSummarization</a></li>
+<li class="chapter" data-level="5.3.3" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#visualization-of-processed-data-1"><i class="fa fa-check"></i><b>5.3.3</b> Visualization of processed data</a></li>
+<li class="chapter" data-level="5.3.4" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#different-parameter-options-for-summarization-and-normalization"><i class="fa fa-check"></i><b>5.3.4</b> Different parameter options for summarization and normalization</a></li>
+<li class="chapter" data-level="5.3.5" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#finding-differentially-abundant-proteins-across-conditions-1"><i class="fa fa-check"></i><b>5.3.5</b> Finding differentially abundant proteins across conditions</a></li>
+<li class="chapter" data-level="5.3.6" data-path="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html"><a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html#msstatstmt.log-and-sessioninfo.txt"><i class="fa fa-check"></i><b>5.3.6</b> msstatstmt.log and sessionInfo.txt</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html"><i class="fa fa-check"></i><b>6</b> Day 2 - Section 6 : Multivariate analysis and classification</a><ul>
+<li class="chapter" data-level="6.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#data-5"><i class="fa fa-check"></i><b>6.1</b> Data</a></li>
+<li class="chapter" data-level="6.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#protein-quantification"><i class="fa fa-check"></i><b>6.2</b> Protein quantification</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#read-the-protein-level-data-from-msstatstmt"><i class="fa fa-check"></i><b>6.2.1</b> Read the protein level data from MSstatsTMT</a></li>
+<li class="chapter" data-level="6.2.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#protein-quantification-1"><i class="fa fa-check"></i><b>6.2.2</b> Protein quantification</a></li>
+<li class="chapter" data-level="6.2.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#deal-with-missing-values"><i class="fa fa-check"></i><b>6.2.3</b> Deal with missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#principal-components-analysis-pca"><i class="fa fa-check"></i><b>6.3</b> Principal components analysis (PCA)</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#pca-with-prcomp-function"><i class="fa fa-check"></i><b>6.3.1</b> PCA with <code>prcomp</code> function</a></li>
+<li class="chapter" data-level="6.3.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#check-the-proportion-of-explained-variance"><i class="fa fa-check"></i><b>6.3.2</b> Check the proportion of explained variance</a></li>
+<li class="chapter" data-level="6.3.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#visualization-for-pc1-vs-pc2"><i class="fa fa-check"></i><b>6.3.3</b> Visualization for PC1 vs PC2</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#heatmap"><i class="fa fa-check"></i><b>6.4</b> Heatmap</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#matrix-format"><i class="fa fa-check"></i><b>6.4.1</b> matrix format</a></li>
+<li class="chapter" data-level="6.4.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#heatmap-function-in-base-stats-package"><i class="fa fa-check"></i><b>6.4.2</b> <code>heatmap</code> function in base <code>stats</code> package</a></li>
+<li class="chapter" data-level="6.4.3" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#color-bar-for-group-information"><i class="fa fa-check"></i><b>6.4.3</b> Color bar for group information</a></li>
+<li class="chapter" data-level="6.4.4" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#different-distance-and-clustering"><i class="fa fa-check"></i><b>6.4.4</b> Different distance and clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#classification"><i class="fa fa-check"></i><b>6.5</b> Classification</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#training-random-forest-with-all-the-proteins"><i class="fa fa-check"></i><b>6.5.1</b> Training random forest with all the proteins</a></li>
+<li class="chapter" data-level="6.5.2" data-path="day-2-section-6-multivariate-analysis-and-classification.html"><a href="day-2-section-6-multivariate-analysis-and-classification.html#predict-validation-cohort"><i class="fa fa-check"></i><b>6.5.2</b> Predict validation cohort</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">May Institute 2019: Statistics for quantitative mass spsectrometry</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="day-2---section-4-msstatstmt-introductioin-to-data-and-preprocessing" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Day 2 - Section 4 : MSstatsTMT, introductioin to data and preprocessing</h1>
+<div id="objective-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Objective</h2>
+<ul>
+<li>Preprocessing steps to make required input format for MSstatsTMT from output from diverse output of spectral processing and peptide quantification tools.</li>
+<li>Make annotation file, based on experimental design.</li>
+</ul>
+<hr />
+</div>
+<div id="data-3" class="section level2">
+<h2><span class="header-section-number">4.2</span> Data</h2>
+<ul>
+<li><p>Controlled mixtures: Sigma UPS1 48 protein-mix were spiked at 4 different ratio into a SILAC-labelled HeLa lysate. The mixtures were measured by TMT 10-plexes.</p></li>
+<li><p>the peptide quantification data of controlled mixtures, processed by Proteome Discoverer and MaxQuant.</p></li>
+</ul>
+<p><img src="img/Experimental_design.png" /></p>
+<hr />
+</div>
+<div id="load-msstatstmt" class="section level2">
+<h2><span class="header-section-number">4.3</span> Load MSstatsTMT</h2>
+<p>Load MSstatsTMT first. Then you are ready to start MSstats.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install MSstatsTMT from bioconductor</span>
+<span class="co"># if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))</span>
+<span class="co">#     install.packages(&quot;BiocManager&quot;)</span>
+<span class="co"># BiocManager::install(&quot;MSstatsTMT&quot;)</span>
+
+<span class="kw">library</span>(MSstatsTMT) <span class="co"># make sure it is version 1.2.1</span></code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggplot2&#39;:
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">?MSstatsTMT</code></pre>
+<p><img src="img/MSstatsTMT-workfolow.jpg" />
+***</p>
+</div>
+<div id="allowable-data-formats-1" class="section level2">
+<h2><span class="header-section-number">4.4</span> Allowable data formats</h2>
+<p><code>MSstatsTMT</code> performs statistical analysis steps, that follow peptide identification and quantitation. Therefore, input to MSstatsTMT is the output of other software tools (such as <code>Proteome Discoverer</code>, <code>MaxQuant</code> and so on) that read raw spectral files
+, identify and quantify peptide ions. The preferred structure of data for use in MSstatsTMT is a .csv file in a <em>long</em> format with at least 10 columns representing the following variables: <strong>ProteinName</strong>, <strong>PeptideSequence</strong>, <strong>Charge</strong>, <strong>PSM</strong>, <strong>Channel</strong>, <strong>Condition</strong>, <strong>BioReplicate</strong>, <strong>Mixture</strong>, <strong>TechRepMixture</strong>, <strong>Intensity</strong>. The variable names are fixed, but are case-insensitive.</p>
+<pre><code>##   ProteinName               PeptideSequence Charge
+## 1      P04406        [K].lISWYDNEFGYSNR.[V]      2
+## 2      Q9NSD9           [K].irPFAVAAVLr.[N]      3
+## 3      P04406    [K].lVINGNPITIFQErDPSk.[I]      3
+## 4      P04406          [R].vVDLmAHMASkE.[-]      3
+## 5      P06576      [R].dQEGQDVLLFIDNIFR.[F]      3
+## 6      P06576 [R].iPSAVGYQPTLATDMGTMQEr.[I]      3
+##                               PSM  Mixture TechRepMixture
+## 1        [K].lISWYDNEFGYSNR.[V]_2 Mixture1              1
+## 2           [K].irPFAVAAVLr.[N]_3 Mixture1              1
+## 3    [K].lVINGNPITIFQErDPSk.[I]_3 Mixture1              1
+## 4          [R].vVDLmAHMASkE.[-]_3 Mixture1              1
+## 5      [R].dQEGQDVLLFIDNIFR.[F]_3 Mixture1              1
+## 6 [R].iPSAVGYQPTLATDMGTMQEr.[I]_3 Mixture1              1
+##                                            Run Channel Condition
+## 1 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 2 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 3 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 4 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 5 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 6 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+##    BioReplicate   Intensity
+## 1 Mixture1_Norm    8348.351
+## 2 Mixture1_Norm   28327.492
+## 3 Mixture1_Norm 1275010.965
+## 4 Mixture1_Norm   80589.877
+## 5 Mixture1_Norm    2231.389
+## 6 Mixture1_Norm  144854.307</code></pre>
+<hr />
+<p>Let’s start preprocessing steps to make required input format for MSstatsTMT from output from diverse output of peptide quantification tools.</p>
+<p><img src="img/MSstatsTMT_workflow_preprocessing.jpg" /></p>
+</div>
+<div id="proteome-discoverer-output" class="section level2">
+<h2><span class="header-section-number">4.5</span> Proteome Discoverer output</h2>
+<div id="read-data-4" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Read data</h3>
+<p>The required input data is the PSM-level data generated by <code>Proteome Discoverer 2.2</code>.
+We first load and access the dataset processed by <code>Proteome Discoverer</code>. The file name is <em>‘spikedin_PSMs.txt’</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read output from Proteome Discoverer </span>
+raw.pd &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="dt">file=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/spikedin_PSMs.txt&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check the column names</span>
+<span class="kw">colnames</span>(raw.pd)</code></pre>
+<pre><code>##  [1] &quot;Checked&quot;                     &quot;Confidence&quot;                 
+##  [3] &quot;Identifying.Node&quot;            &quot;PSM.Ambiguity&quot;              
+##  [5] &quot;Annotated.Sequence&quot;          &quot;Modifications&quot;              
+##  [7] &quot;Marked.as&quot;                   &quot;X..Protein.Groups&quot;          
+##  [9] &quot;X..Proteins&quot;                 &quot;Master.Protein.Accessions&quot;  
+## [11] &quot;Master.Protein.Descriptions&quot; &quot;Protein.Accessions&quot;         
+## [13] &quot;Protein.Descriptions&quot;        &quot;X..Missed.Cleavages&quot;        
+## [15] &quot;Charge&quot;                      &quot;DeltaScore&quot;                 
+## [17] &quot;DeltaCn&quot;                     &quot;Rank&quot;                       
+## [19] &quot;Search.Engine.Rank&quot;          &quot;m.z..Da.&quot;                   
+## [21] &quot;MH...Da.&quot;                    &quot;Theo..MH...Da.&quot;             
+## [23] &quot;DeltaM..ppm.&quot;                &quot;Deltam.z..Da.&quot;              
+## [25] &quot;Activation.Type&quot;             &quot;MS.Order&quot;                   
+## [27] &quot;Isolation.Interference....&quot;  &quot;Average.Reporter.S.N&quot;       
+## [29] &quot;Ion.Inject.Time..ms.&quot;        &quot;RT..min.&quot;                   
+## [31] &quot;First.Scan&quot;                  &quot;Spectrum.File&quot;              
+## [33] &quot;File.ID&quot;                     &quot;Abundance..126&quot;             
+## [35] &quot;Abundance..127N&quot;             &quot;Abundance..127C&quot;            
+## [37] &quot;Abundance..128N&quot;             &quot;Abundance..128C&quot;            
+## [39] &quot;Abundance..129N&quot;             &quot;Abundance..129C&quot;            
+## [41] &quot;Abundance..130N&quot;             &quot;Abundance..130C&quot;            
+## [43] &quot;Abundance..131&quot;              &quot;Quan.Info&quot;                  
+## [45] &quot;Ions.Score&quot;                  &quot;Identity.Strict&quot;            
+## [47] &quot;Identity.Relaxed&quot;            &quot;Expectation.Value&quot;          
+## [49] &quot;Percolator.q.Value&quot;          &quot;Percolator.PEP&quot;</code></pre>
+<p>The column names are differently from required input. Let’s do preliminary check for this input.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># total number of unique protein name</span>
+proteins &lt;-<span class="st"> </span><span class="kw">unique</span>(raw.pd<span class="op">$</span>Protein.Accessions)
+<span class="kw">length</span>(proteins)</code></pre>
+<pre><code>## [1] 50</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show the spiked-in proteins</span>
+proteins[<span class="kw">grepl</span>(<span class="st">&quot;ups&quot;</span>,proteins)]</code></pre>
+<pre><code>##  [1] P02788ups   P62988ups   P68871ups   P02741ups   P01008ups  
+##  [6] P10636-8ups P02787ups   P02753ups   P00915ups   P05413ups  
+## [11] P01344ups   P01579ups   P01031ups   P01375ups   P02144ups  
+## 50 Levels: A1L0T0 O00625 O60427 P00915ups P01008ups ... Q9Y6C9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># total number of unique peptide names</span>
+<span class="kw">length</span>(<span class="kw">unique</span>(raw.pd<span class="op">$</span>Annotated.Sequence))</code></pre>
+<pre><code>## [1] 461</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># unique Spectrum.File, which is TMT run.</span>
+<span class="kw">unique</span>(raw.pd<span class="op">$</span>Spectrum.File)</code></pre>
+<pre><code>##  [1] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw
+##  [2] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_02.raw
+##  [3] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw
+##  [4] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_02.raw
+##  [5] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_02.raw
+##  [6] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_01.raw
+##  [7] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_02.raw
+##  [8] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_03.raw
+##  [9] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_02.raw
+## [10] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_01.raw
+## [11] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_03.raw
+## [12] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_03.raw
+## [13] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_01.raw
+## [14] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_03.raw
+## [15] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01.raw
+## 15 Levels: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw ...</code></pre>
+</div>
+<div id="prepare-annotation-file" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Prepare annotation file</h3>
+<p><code>MSstatsTMT</code> can make inference for group comparison design. In a group comparison design, the conditions (e.g., disease states) are profiled across <strong>non-overlapping sets of biological replicates (i.e., subjects)</strong>. In this example there are 4 conditions, 0.125, 0.5, 0.667, 1 (in general the number of conditions can vary). There are 2 subjects per condition per MS run (in general an equal number of replicates per condition is not required). Besides 2 pooled control replicates per run for across TMT-plex normalizations. Totally, each mixture has 10 replicates. There are 5 mixtures and each mixture has 3 technical replicate runs (in general technical replicates are not required, and their number per sample may vary). Overall, in this example there are 5 × 3 = 15 mass spectrometry runs and 5 × 3 x 10 = 150 replicates.</p>
+<table>
+<thead>
+<tr class="header">
+<th><code>Mixture</code></th>
+<th><code>Run</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture1_03.raw</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture2_02.raw</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture2_03.raw</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture3_02.raw</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture4_01.raw</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture4_02.raw</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture4_03.raw</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture5_01.raw</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture5_02.raw</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>161117_SILAC_HeLa_UPS1_TMT10_Mixture5_03.raw</td>
+</tr>
+</tbody>
+</table>
+<p>Here show run <strong>161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw</strong> as an example,</p>
+<table>
+<thead>
+<tr class="header">
+<th><code>Run</code></th>
+<th><code>Channel</code></th>
+<th><code>BioReplicate</code></th>
+<th><code>Condition</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>X127C</td>
+<td>1.X127C</td>
+<td>0.125</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>X129N</td>
+<td>1.X129N</td>
+<td>0.125</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>X128N</td>
+<td>1.X128N</td>
+<td>0.5</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>X129C</td>
+<td>1.X129C</td>
+<td>0.5</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>X127N</td>
+<td>1.X127N</td>
+<td>0.667</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>X130C</td>
+<td>1.X130C</td>
+<td>0.667</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>X128C</td>
+<td>1.X128C</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>X130N</td>
+<td>1.X130N</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>X126</td>
+<td>1.X126</td>
+<td>Norm</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>X131</td>
+<td>1.X131</td>
+<td>Norm</td>
+</tr>
+</tbody>
+</table>
+<p>The most important is that 1) <code>Run</code> is not order of spectral acquisition, but just unique MS run ID 2) if normalization between runs need to be done, then each run must have at least one <code>Norm</code> channel 3) <code>Channel</code> column in the annotation file should match with the corresponding channel names in in output of <code>Proteome Discoverer</code> 4) <strong>Spectrum.File</strong> in the PSM output of <code>Proteome Discoverer</code> should be the <strong>Run</strong> column in the annotation file 5) If one channel of one mixture doesn’t have sample, put <code>None</code> under <strong>Condition</strong> and <strong>BioReplicate</strong> column .</p>
+<p>Annotation information is required to fill in <strong>Condition</strong>, <strong>TechRepMixture</strong>, <strong>Mixture</strong> and <strong>BioReplicate</strong> for corresponding <strong>Run</strong> and <strong>Channel</strong> information. Users have to prepare as csv or txt file like ‘PD_Annotation.csv’, which includes <strong>Run</strong>, <strong>Channel</strong>, <strong>Condition</strong>, <strong>BioReplicate</strong>, <strong>TechRepMixture</strong> and <strong>Mixture</strong> information, and load it in R.</p>
+<pre class="sourceCode r"><code class="sourceCode r">annot.pd &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;data/data_ProteomeDiscoverer_TMT/PD_Annotation.csv&quot;</span>)
+<span class="kw">head</span>(annot.pd)</code></pre>
+<pre><code>##                                        Run  Mixture TechRepMixture
+## 1 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01 Mixture2              1
+## 2 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01 Mixture2              1
+## 3 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01 Mixture2              1
+## 4 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01 Mixture2              1
+## 5 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01 Mixture2              1
+## 6 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01 Mixture2              1
+##   Fraction   Channel Condition BioReplicate
+## 1       F1 channel.0      Norm         Norm
+## 2       F1 channel.1       0.5          0.5
+## 3       F1 channel.2         1            1
+## 4       F1 channel.3     0.667        0.667
+## 5       F1 channel.4     0.125        0.125
+## 6       F1 channel.5         1            1</code></pre>
+<div id="prepare-the-file-with-run-information" class="section level4">
+<h4><span class="header-section-number">4.5.2.1</span> Prepare the file with run information</h4>
+<p>Raw Spectrum file name in the output of peptide quantification tool should be the Run information in the annotation file.</p>
+<p>Let’s start with <strong>Spectrum.File</strong> in PSM output of <code>Proteome Discoverer</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">runs &lt;-<span class="st"> </span><span class="kw">unique</span>(raw.pd<span class="op">$</span>Spectrum.File) <span class="co"># MS runs</span>
+runs</code></pre>
+<pre><code>##  [1] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw
+##  [2] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_02.raw
+##  [3] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw
+##  [4] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_02.raw
+##  [5] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_02.raw
+##  [6] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_01.raw
+##  [7] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_02.raw
+##  [8] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_03.raw
+##  [9] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_02.raw
+## [10] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_01.raw
+## [11] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_03.raw
+## [12] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_03.raw
+## [13] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_01.raw
+## [14] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_03.raw
+## [15] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01.raw
+## 15 Levels: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw ...</code></pre>
+<p>The run ID has the mixture and technical replicate information</p>
+<p>Let’s try to extract the mixture and technical replicate information.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(dplyr)
+
+Run_info &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Run =</span> runs) <span class="co"># initialize the run file</span>
+
+<span class="co"># use function separate()</span>
+?separate
+
+<span class="co">## Add the mixture and technical replicate information</span>
+Run_info &lt;-<span class="st"> </span>Run_info <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">separate</span>(Run, <span class="kw">c</span>(<span class="st">&quot;Mixture&quot;</span>, <span class="st">&quot;TechRepMixture&quot;</span>), <span class="dt">sep=</span><span class="st">&quot;_0&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>) 
+Run_info</code></pre>
+<pre><code>##                                             Run
+## 1  161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw
+## 2  161117_SILAC_HeLa_UPS1_TMT10_Mixture4_02.raw
+## 3  161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw
+## 4  161117_SILAC_HeLa_UPS1_TMT10_Mixture5_02.raw
+## 5  161117_SILAC_HeLa_UPS1_TMT10_Mixture2_02.raw
+## 6  161117_SILAC_HeLa_UPS1_TMT10_Mixture5_01.raw
+## 7  161117_SILAC_HeLa_UPS1_TMT10_Mixture1_02.raw
+## 8  161117_SILAC_HeLa_UPS1_TMT10_Mixture4_03.raw
+## 9  161117_SILAC_HeLa_UPS1_TMT10_Mixture3_02.raw
+## 10 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_01.raw
+## 11 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_03.raw
+## 12 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_03.raw
+## 13 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_01.raw
+## 14 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_03.raw
+## 15 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01.raw
+##                                  Mixture TechRepMixture
+## 1  161117_SILAC_HeLa_UPS1_TMT10_Mixture3          3.raw
+## 2  161117_SILAC_HeLa_UPS1_TMT10_Mixture4          2.raw
+## 3  161117_SILAC_HeLa_UPS1_TMT10_Mixture1          1.raw
+## 4  161117_SILAC_HeLa_UPS1_TMT10_Mixture5          2.raw
+## 5  161117_SILAC_HeLa_UPS1_TMT10_Mixture2          2.raw
+## 6  161117_SILAC_HeLa_UPS1_TMT10_Mixture5          1.raw
+## 7  161117_SILAC_HeLa_UPS1_TMT10_Mixture1          2.raw
+## 8  161117_SILAC_HeLa_UPS1_TMT10_Mixture4          3.raw
+## 9  161117_SILAC_HeLa_UPS1_TMT10_Mixture3          2.raw
+## 10 161117_SILAC_HeLa_UPS1_TMT10_Mixture3          1.raw
+## 11 161117_SILAC_HeLa_UPS1_TMT10_Mixture5          3.raw
+## 12 161117_SILAC_HeLa_UPS1_TMT10_Mixture1          3.raw
+## 13 161117_SILAC_HeLa_UPS1_TMT10_Mixture4          1.raw
+## 14 161117_SILAC_HeLa_UPS1_TMT10_Mixture2          3.raw
+## 15 161117_SILAC_HeLa_UPS1_TMT10_Mixture2          1.raw</code></pre>
+<p>Then let’s clean the Mixture ID and TechRepMixture ID</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## clean the run file and add fraction information </span>
+Run_info &lt;-<span class="st"> </span>Run_info <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Mixture =</span> <span class="kw">gsub</span>(<span class="st">&quot;161117_SILAC_HeLa_UPS1_TMT10_&quot;</span>, <span class="st">&quot;&quot;</span>, Mixture),
+         <span class="dt">TechRepMixture =</span> <span class="kw">gsub</span>(<span class="st">&quot;.raw&quot;</span>, <span class="st">&quot;&quot;</span>, TechRepMixture),
+         <span class="dt">Fraction =</span> <span class="st">&quot;F1&quot;</span>)
+Run_info</code></pre>
+<pre><code>##                                             Run  Mixture TechRepMixture
+## 1  161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+## 2  161117_SILAC_HeLa_UPS1_TMT10_Mixture4_02.raw Mixture4              2
+## 3  161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw Mixture1              1
+## 4  161117_SILAC_HeLa_UPS1_TMT10_Mixture5_02.raw Mixture5              2
+## 5  161117_SILAC_HeLa_UPS1_TMT10_Mixture2_02.raw Mixture2              2
+## 6  161117_SILAC_HeLa_UPS1_TMT10_Mixture5_01.raw Mixture5              1
+## 7  161117_SILAC_HeLa_UPS1_TMT10_Mixture1_02.raw Mixture1              2
+## 8  161117_SILAC_HeLa_UPS1_TMT10_Mixture4_03.raw Mixture4              3
+## 9  161117_SILAC_HeLa_UPS1_TMT10_Mixture3_02.raw Mixture3              2
+## 10 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_01.raw Mixture3              1
+## 11 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_03.raw Mixture5              3
+## 12 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_03.raw Mixture1              3
+## 13 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_01.raw Mixture4              1
+## 14 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_03.raw Mixture2              3
+## 15 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01.raw Mixture2              1
+##    Fraction
+## 1        F1
+## 2        F1
+## 3        F1
+## 4        F1
+## 5        F1
+## 6        F1
+## 7        F1
+## 8        F1
+## 9        F1
+## 10       F1
+## 11       F1
+## 12       F1
+## 13       F1
+## 14       F1
+## 15       F1</code></pre>
+</div>
+<div id="prepare-the-file-with-group-information" class="section level4">
+<h4><span class="header-section-number">4.5.2.2</span> Prepare the file with group information</h4>
+<p>Let’s add the group and biological replicate information for each channel in each mixture. The channel ID should be consistent with the reporter ion intensity columns in the PSM file of <code>Proteome Discoverer</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(raw.pd)</code></pre>
+<pre><code>##  [1] &quot;Checked&quot;                     &quot;Confidence&quot;                 
+##  [3] &quot;Identifying.Node&quot;            &quot;PSM.Ambiguity&quot;              
+##  [5] &quot;Annotated.Sequence&quot;          &quot;Modifications&quot;              
+##  [7] &quot;Marked.as&quot;                   &quot;X..Protein.Groups&quot;          
+##  [9] &quot;X..Proteins&quot;                 &quot;Master.Protein.Accessions&quot;  
+## [11] &quot;Master.Protein.Descriptions&quot; &quot;Protein.Accessions&quot;         
+## [13] &quot;Protein.Descriptions&quot;        &quot;X..Missed.Cleavages&quot;        
+## [15] &quot;Charge&quot;                      &quot;DeltaScore&quot;                 
+## [17] &quot;DeltaCn&quot;                     &quot;Rank&quot;                       
+## [19] &quot;Search.Engine.Rank&quot;          &quot;m.z..Da.&quot;                   
+## [21] &quot;MH...Da.&quot;                    &quot;Theo..MH...Da.&quot;             
+## [23] &quot;DeltaM..ppm.&quot;                &quot;Deltam.z..Da.&quot;              
+## [25] &quot;Activation.Type&quot;             &quot;MS.Order&quot;                   
+## [27] &quot;Isolation.Interference....&quot;  &quot;Average.Reporter.S.N&quot;       
+## [29] &quot;Ion.Inject.Time..ms.&quot;        &quot;RT..min.&quot;                   
+## [31] &quot;First.Scan&quot;                  &quot;Spectrum.File&quot;              
+## [33] &quot;File.ID&quot;                     &quot;Abundance..126&quot;             
+## [35] &quot;Abundance..127N&quot;             &quot;Abundance..127C&quot;            
+## [37] &quot;Abundance..128N&quot;             &quot;Abundance..128C&quot;            
+## [39] &quot;Abundance..129N&quot;             &quot;Abundance..129C&quot;            
+## [41] &quot;Abundance..130N&quot;             &quot;Abundance..130C&quot;            
+## [43] &quot;Abundance..131&quot;              &quot;Quan.Info&quot;                  
+## [45] &quot;Ions.Score&quot;                  &quot;Identity.Strict&quot;            
+## [47] &quot;Identity.Relaxed&quot;            &quot;Expectation.Value&quot;          
+## [49] &quot;Percolator.q.Value&quot;          &quot;Percolator.PEP&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Channel ID in the PSM file</span>
+channels &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;126&quot;</span>, <span class="st">&quot;127N&quot;</span>, <span class="st">&quot;127C&quot;</span>, <span class="st">&quot;128N&quot;</span>, <span class="st">&quot;128C&quot;</span>, <span class="st">&quot;129N&quot;</span>, <span class="st">&quot;129C&quot;</span>, <span class="st">&quot;130N&quot;</span>, <span class="st">&quot;130C&quot;</span>, <span class="st">&quot;131&quot;</span>)
+<span class="co">## Mixture ID from run file</span>
+mixtures &lt;-<span class="st"> </span><span class="kw">unique</span>(Run_info<span class="op">$</span>Mixture)
+mixtures</code></pre>
+<pre><code>## [1] &quot;Mixture3&quot; &quot;Mixture4&quot; &quot;Mixture1&quot; &quot;Mixture5&quot; &quot;Mixture2&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## create the file with channel information in each mixture</span>
+Group_info &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(channels, mixtures)
+<span class="kw">colnames</span>(Group_info) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Channel&quot;</span>, <span class="st">&quot;Mixture&quot;</span>)
+<span class="kw">head</span>(Group_info)</code></pre>
+<pre><code>##   Channel  Mixture
+## 1     126 Mixture3
+## 2    127N Mixture3
+## 3    127C Mixture3
+## 4    128N Mixture3
+## 5    128C Mixture3
+## 6    129N Mixture3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## save the channel file and fill in the condition and biological replicate information manually</span>
+<span class="kw">write.csv</span>(Group_info, <span class="dt">file =</span> <span class="st">&quot;Group_info.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)
+
+<span class="co">## Now the condition information should be available in the file</span>
+Group_info_filled &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&quot;data/data_ProteomeDiscoverer_TMT/Group_info_pd.csv&quot;</span>)
+<span class="kw">head</span>(Group_info_filled)</code></pre>
+<pre><code>##   Channel  Mixture Condition BioReplicate
+## 1     126 Mixture3      Norm         Norm
+## 2    127N Mixture3     0.125        0.125
+## 3    127C Mixture3     0.667        0.667
+## 4    128N Mixture3         1            1
+## 5    128C Mixture3       0.5          0.5
+## 6    129N Mixture3       0.5          0.5</code></pre>
+</div>
+<div id="prepare-the-final-annotation-file" class="section level4">
+<h4><span class="header-section-number">4.5.2.3</span> Prepare the final annotation file</h4>
+<p>Let’s generate the annotation file from run file and group file</p>
+<pre class="sourceCode r"><code class="sourceCode r">annotation &lt;-<span class="st"> </span><span class="kw">full_join</span>(Run_info, Group_info_filled)</code></pre>
+<pre><code>## Joining, by = &quot;Mixture&quot;</code></pre>
+<pre><code>## Warning: Column `Mixture` joining character vector and factor, coercing
+## into character vector</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(annotation)</code></pre>
+<pre><code>## [1] 150</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(annotation)</code></pre>
+<pre><code>##                                            Run  Mixture TechRepMixture
+## 1 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+## 2 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+## 3 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+## 4 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+## 5 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+## 6 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03.raw Mixture3              3
+##   Fraction Channel Condition BioReplicate
+## 1       F1     126      Norm         Norm
+## 2       F1    127N     0.125        0.125
+## 3       F1    127C     0.667        0.667
+## 4       F1    128N         1            1
+## 5       F1    128C       0.5          0.5
+## 6       F1    129N       0.5          0.5</code></pre>
+</div>
+</div>
+<div id="preprocessing-with-pdtomsstatstmtformat" class="section level3">
+<h3><span class="header-section-number">4.5.3</span> Preprocessing with <code>PDtoMSstatsTMTFormat</code></h3>
+<p>The input data for <code>MSstatsTMT</code> is required to contain variables of <strong>ProteinName</strong>, <strong>PeptideSequence</strong>, <strong>Charge</strong>, <strong>PSM</strong>, <strong>Channel</strong>, <strong>Condition</strong>, <strong>BioReplicate</strong>, <strong>TechRepMixture</strong>, <strong>Mixture</strong>, <strong>Intensity</strong>. These variable names should be fixed. Output from Proteome Discoverer have different columns from the required input of <code>MSstatsTMT</code>. <code>PDtoMSstatsTMTFormat</code> function helps pre-processing for making right format of MSstatsTMT input from Proteome Discoverer output. For example, it renames some column name, and remove shared peptides.</p>
+<p>Here is the summary of pre-processing steps in <code>PDtoMSstatsTMTFormat</code> function.</p>
+<ul>
+<li>Peptide ions which are shared by more than one protein are removed</li>
+<li>If one spectrum has multiple identifications within one run, it only keeps the best identification which has most measurements within that run or highest identification score or largest summation of all the measurements within that run</li>
+<li>If one peptide ion has any missing value within one run, it removes the peptide ion from that run</li>
+<li>For fractionation, it removes the shared peptide ions among the fractions of each mixture and then combine all the fractions for each mixture</li>
+</ul>
+<p>For further details, visit the help file using the following code.</p>
+<pre class="sourceCode r"><code class="sourceCode r">?PDtoMSstatsTMTFormat</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reformating and pre-processing for PD output.</span>
+input.pd &lt;-<span class="st"> </span><span class="kw">PDtoMSstatsTMTFormat</span>(raw.pd, <span class="dt">annotation=</span>annotation)
+<span class="kw">head</span>(input.pd)</code></pre>
+<pre><code>##   ProteinName                  PeptideSequence Charge
+## 1   P05413ups           [K].lGVEFDETTADDRk.[V]      3
+## 2      Q92734 [K].nVMSAFGLTDDQVSGPPSAPAEDr.[S]      3
+## 3   P02787ups              [K].eGYYGYTGAFR.[C]      2
+## 4      Q9HAV4               [K].tDSPScEYSr.[F]      2
+## 5      P13667     [K].eENGVLVLNDANFDNFVADk.[D]      3
+## 6      P10155                 [K].aLSVETEk.[L]      2
+##                                  PSM  Mixture TechRepMixture
+## 1           [K].lGVEFDETTADDRk.[V]_3 Mixture1              1
+## 2 [K].nVMSAFGLTDDQVSGPPSAPAEDr.[S]_3 Mixture1              1
+## 3              [K].eGYYGYTGAFR.[C]_2 Mixture1              1
+## 4               [K].tDSPScEYSr.[F]_2 Mixture1              1
+## 5     [K].eENGVLVLNDANFDNFVADk.[D]_3 Mixture1              1
+## 6                 [K].aLSVETEk.[L]_2 Mixture1              1
+##                                            Run Channel Condition
+## 1 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 2 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 3 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 4 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 5 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+## 6 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01.raw     126      Norm
+##   BioReplicate Intensity
+## 1         Norm 34115.190
+## 2         Norm 11431.716
+## 3         Norm 25847.839
+## 4         Norm  2446.339
+## 5         Norm 26508.569
+## 6         Norm 20478.670</code></pre>
+</div>
+<div id="preliminary-check-2" class="section level3">
+<h3><span class="header-section-number">4.5.4</span> Preliminary check</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># total number of proteins</span>
+proteins &lt;-<span class="st"> </span><span class="kw">unique</span>(input.pd<span class="op">$</span>ProteinName)
+<span class="kw">length</span>(proteins)</code></pre>
+<pre><code>## [1] 50</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show the spiked-in proteins</span>
+proteins[<span class="kw">grepl</span>(<span class="st">&quot;ups&quot;</span>,proteins)]</code></pre>
+<pre><code>##  [1] P05413ups   P02787ups   P00915ups   P02788ups   P01344ups  
+##  [6] P01375ups   P01031ups   P01008ups   P68871ups   P02753ups  
+## [11] P10636-8ups P62988ups   P02741ups   P01579ups   P02144ups  
+## 50 Levels: A1L0T0 O00625 O60427 P00915ups P01008ups ... Q9Y6C9</code></pre>
+</div>
+<div id="save-your-work-1" class="section level3">
+<h3><span class="header-section-number">4.5.5</span> Save your work</h3>
+<p>We can save the data that we made so far.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save</span>(input.pd, <span class="dt">file=</span><span class="st">&#39;data/data_ProteomeDiscoverer_TMT/input.pd.rda&#39;</span>)
+<span class="co">#write.csv(input.pd, file=&#39;data/data_ProteomeDiscoverer_TMT/input.pd.csv&#39;, row.names = FALSE)</span></code></pre>
+<hr />
+</div>
+</div>
+<div id="maxquant-output-1" class="section level2">
+<h2><span class="header-section-number">4.6</span> MaxQuant output</h2>
+<div id="read-data-5" class="section level3">
+<h3><span class="header-section-number">4.6.1</span> Read data</h3>
+<p>Three files should be prepared before MSstatsTMT. Two files, ‘proteinGroups.txt’ and ‘evidence.txt’ are outputs from MaxQuant.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First, get protein ID information</span>
+proteinGroups &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/data_MaxQuant_TMT/proteinGroups.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in MaxQuant file: evidence.txt</span>
+evi &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/data_MaxQuant_TMT/evidence.txt&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>)
+<span class="kw">colnames</span>(evi)</code></pre>
+<pre><code>##   [1] &quot;Sequence&quot;                           
+##   [2] &quot;Length&quot;                             
+##   [3] &quot;Modifications&quot;                      
+##   [4] &quot;Modified.sequence&quot;                  
+##   [5] &quot;Arg10.Probabilities&quot;                
+##   [6] &quot;Lys8.Probabilities&quot;                 
+##   [7] &quot;Lys8.TMT6.Probabilities&quot;            
+##   [8] &quot;Oxidation..M..Probabilities&quot;        
+##   [9] &quot;Arg10.Score.Diffs&quot;                  
+##  [10] &quot;Lys8.Score.Diffs&quot;                   
+##  [11] &quot;Lys8.TMT6.Score.Diffs&quot;              
+##  [12] &quot;Oxidation..M..Score.Diffs&quot;          
+##  [13] &quot;Arg10&quot;                              
+##  [14] &quot;Lys8&quot;                               
+##  [15] &quot;Lys8.TMT6&quot;                          
+##  [16] &quot;Oxidation..M.&quot;                      
+##  [17] &quot;Missed.cleavages&quot;                   
+##  [18] &quot;Proteins&quot;                           
+##  [19] &quot;Leading.proteins&quot;                   
+##  [20] &quot;Leading.razor.protein&quot;              
+##  [21] &quot;Gene.names&quot;                         
+##  [22] &quot;Protein.names&quot;                      
+##  [23] &quot;Type&quot;                               
+##  [24] &quot;Raw.file&quot;                           
+##  [25] &quot;Experiment&quot;                         
+##  [26] &quot;MS.MS.m.z&quot;                          
+##  [27] &quot;Charge&quot;                             
+##  [28] &quot;m.z&quot;                                
+##  [29] &quot;Mass&quot;                               
+##  [30] &quot;Resolution&quot;                         
+##  [31] &quot;Uncalibrated...Calibrated.m.z..ppm.&quot;
+##  [32] &quot;Uncalibrated...Calibrated.m.z..Da.&quot; 
+##  [33] &quot;Mass.Error..ppm.&quot;                   
+##  [34] &quot;Mass.Error..Da.&quot;                    
+##  [35] &quot;Uncalibrated.Mass.Error..ppm.&quot;      
+##  [36] &quot;Uncalibrated.Mass.Error..Da.&quot;       
+##  [37] &quot;Max.intensity.m.z.0&quot;                
+##  [38] &quot;Retention.time&quot;                     
+##  [39] &quot;Retention.length&quot;                   
+##  [40] &quot;Calibrated.retention.time&quot;          
+##  [41] &quot;Calibrated.retention.time.start&quot;    
+##  [42] &quot;Calibrated.retention.time.finish&quot;   
+##  [43] &quot;Retention.time.calibration&quot;         
+##  [44] &quot;Match.time.difference&quot;              
+##  [45] &quot;Match.m.z.difference&quot;               
+##  [46] &quot;Match.q.value&quot;                      
+##  [47] &quot;Match.score&quot;                        
+##  [48] &quot;Number.of.data.points&quot;              
+##  [49] &quot;Number.of.scans&quot;                    
+##  [50] &quot;Number.of.isotopic.peaks&quot;           
+##  [51] &quot;PIF&quot;                                
+##  [52] &quot;Fraction.of.total.spectrum&quot;         
+##  [53] &quot;Base.peak.fraction&quot;                 
+##  [54] &quot;PEP&quot;                                
+##  [55] &quot;MS.MS.Count&quot;                        
+##  [56] &quot;MS.MS.Scan.Number&quot;                  
+##  [57] &quot;Score&quot;                              
+##  [58] &quot;Delta.score&quot;                        
+##  [59] &quot;Combinatorics&quot;                      
+##  [60] &quot;Intensity&quot;                          
+##  [61] &quot;Reporter.intensity.corrected.0&quot;     
+##  [62] &quot;Reporter.intensity.corrected.1&quot;     
+##  [63] &quot;Reporter.intensity.corrected.2&quot;     
+##  [64] &quot;Reporter.intensity.corrected.3&quot;     
+##  [65] &quot;Reporter.intensity.corrected.4&quot;     
+##  [66] &quot;Reporter.intensity.corrected.5&quot;     
+##  [67] &quot;Reporter.intensity.corrected.6&quot;     
+##  [68] &quot;Reporter.intensity.corrected.7&quot;     
+##  [69] &quot;Reporter.intensity.corrected.8&quot;     
+##  [70] &quot;Reporter.intensity.corrected.9&quot;     
+##  [71] &quot;Reporter.intensity.0&quot;               
+##  [72] &quot;Reporter.intensity.1&quot;               
+##  [73] &quot;Reporter.intensity.2&quot;               
+##  [74] &quot;Reporter.intensity.3&quot;               
+##  [75] &quot;Reporter.intensity.4&quot;               
+##  [76] &quot;Reporter.intensity.5&quot;               
+##  [77] &quot;Reporter.intensity.6&quot;               
+##  [78] &quot;Reporter.intensity.7&quot;               
+##  [79] &quot;Reporter.intensity.8&quot;               
+##  [80] &quot;Reporter.intensity.9&quot;               
+##  [81] &quot;Reporter.intensity.count.0&quot;         
+##  [82] &quot;Reporter.intensity.count.1&quot;         
+##  [83] &quot;Reporter.intensity.count.2&quot;         
+##  [84] &quot;Reporter.intensity.count.3&quot;         
+##  [85] &quot;Reporter.intensity.count.4&quot;         
+##  [86] &quot;Reporter.intensity.count.5&quot;         
+##  [87] &quot;Reporter.intensity.count.6&quot;         
+##  [88] &quot;Reporter.intensity.count.7&quot;         
+##  [89] &quot;Reporter.intensity.count.8&quot;         
+##  [90] &quot;Reporter.intensity.count.9&quot;         
+##  [91] &quot;Reporter.PIF&quot;                       
+##  [92] &quot;Reporter.fraction&quot;                  
+##  [93] &quot;Reverse&quot;                            
+##  [94] &quot;Potential.contaminant&quot;              
+##  [95] &quot;id&quot;                                 
+##  [96] &quot;Protein.group.IDs&quot;                  
+##  [97] &quot;Peptide.ID&quot;                         
+##  [98] &quot;Mod..peptide.ID&quot;                    
+##  [99] &quot;MS.MS.IDs&quot;                          
+## [100] &quot;Best.MS.MS&quot;                         
+## [101] &quot;AIF.MS.MS.IDs&quot;                      
+## [102] &quot;Arg10.site.IDs&quot;                     
+## [103] &quot;Lys8.site.IDs&quot;                      
+## [104] &quot;Lys8.TMT6.site.IDs&quot;                 
+## [105] &quot;Oxidation..M..site.IDs&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(evi<span class="op">$</span>Raw.file)</code></pre>
+<pre><code>##  [1] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_01
+##  [2] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_01
+##  [3] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_02
+##  [4] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_03
+##  [5] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_03
+##  [6] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_02
+##  [7] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_03
+##  [8] 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01
+##  [9] 161117_SILAC_HeLa_UPS1_TMT10_Mixture3_01
+## [10] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_01
+## [11] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_02
+## [12] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_02
+## [13] 161117_SILAC_HeLa_UPS1_TMT10_Mixture2_02
+## [14] 161117_SILAC_HeLa_UPS1_TMT10_Mixture4_03
+## [15] 161117_SILAC_HeLa_UPS1_TMT10_Mixture5_03
+## 15 Levels: 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 ...</code></pre>
+<p>Again, we need file annotation file, required to fill in Condition, BioReplicate and Mixture for corresponding Run and Channel information. Users have to prepare as csv or txt file like ‘MaxQuant_annotation.csv’, which includes <strong>Run</strong>, <strong>Channel</strong>, <strong>Condition</strong>, <strong>BioReplicate</strong>, <strong>TechRepMixture</strong> and <strong>Mixture</strong> information, and load it in R.</p>
+</div>
+<div id="set-annotation-file-4" class="section level3">
+<h3><span class="header-section-number">4.6.2</span> Set annotation file</h3>
+<p><strong>Run</strong> column in the annotation file should be the same as unique <strong>Raw.file</strong> in evidence.txt file. <strong>Channel</strong> column in the annotation file should match with the corresponding channel names in evidence.txt file.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in annotation including condition and biological replicates: MaxQuant_annotation.csv</span>
+annot.maxquant &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/data_MaxQuant_TMT/MaxQuant_annotation.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+<span class="kw">head</span>(annot.maxquant)</code></pre>
+<pre><code>##                                        Run Fraction TechRepMixture
+## 1 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01        1              1
+## 2 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01        1              1
+## 3 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01        1              1
+## 4 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01        1              1
+## 5 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01        1              1
+## 6 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01        1              1
+##     Channel Condition  Mixture BioReplicate
+## 1 channel.0      Norm Mixture1         Norm
+## 2 channel.1     0.667 Mixture1        0.667
+## 3 channel.2     0.125 Mixture1        0.125
+## 4 channel.3       0.5 Mixture1          0.5
+## 5 channel.4         1 Mixture1            1
+## 6 channel.5     0.125 Mixture1        0.125</code></pre>
+</div>
+<div id="preprocessing-with-maxqtomsstatstmtformat" class="section level3">
+<h3><span class="header-section-number">4.6.3</span> Preprocessing with <code>MaxQtoMSstatsTMTFormat</code></h3>
+<p><code>MaxQtoMSstatsTMTFormat</code> function helps pre-processing for making right format of MSstatsTMT input from MaxQuant output. Basically, this function gets peptide ion intensity from <code>‘evidence.txt’</code> file. In addition, there are several steps to filter out or to modify the data in order to get required information.</p>
+<p>Here is the summary of pre-processing steps in <code>MaxQtoMSstatsTMTFormat</code> function</p>
+<ul>
+<li>Use <code>Proteins</code> in ‘proteinGroups.txt’ as protein ID</li>
+<li>Peptide ions which are shared by more than one protein are removed</li>
+<li>If one spectrum has multiple identifications within one run, it only keeps the best identification which has most measurements within that run or highest identification score or largest summation of all the measurements within that run</li>
+<li>If one peptide ion has any missing value within one run, it removes the peptide ion from that run</li>
+<li>For fractionation, it removes the shared peptide ions among the fractions of each mixture and then combine all the fractions for each mixture</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">?MaxQtoMSstatsTMTFormat</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reformating and pre-processing for MaxQuant output.</span>
+input.maxquant &lt;-<span class="st"> </span><span class="kw">MaxQtoMSstatsTMTFormat</span>(<span class="dt">evidence=</span>evi, 
+                                      <span class="dt">annotation=</span>annot.maxquant,
+                                      <span class="dt">proteinGroups=</span>proteinGroups)
+<span class="kw">head</span>(input.maxquant)</code></pre>
+<pre><code>##   ProteinName             PeptideSequence Charge
+## 1      P67870 VYCENQPMLPIGLSDIPGEAMVK(ly)      3
+## 2      Q9HAV4              TDSPSCEYSR(ar)      2
+## 3   P62988ups                   GSHMQIFVK      3
+## 4      Q9HAV4           EVMDLITVCCVSK(ly)      3
+## 5      P13667    DFPEYTFAIADEEDYAGEVK(ly)      3
+## 6      O00625            NLDPFLLFDEFK(ly)      2
+##                             PSM  Mixture TechRepMixture
+## 1 VYCENQPMLPIGLSDIPGEAMVK(ly)_3 Mixture1              1
+## 2              TDSPSCEYSR(ar)_2 Mixture1              1
+## 3                   GSHMQIFVK_3 Mixture1              1
+## 4           EVMDLITVCCVSK(ly)_3 Mixture1              1
+## 5    DFPEYTFAIADEEDYAGEVK(ly)_3 Mixture1              1
+## 6            NLDPFLLFDEFK(ly)_2 Mixture1              1
+##                                        Run   Channel BioReplicate
+## 1 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 channel.0         Norm
+## 2 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 channel.0         Norm
+## 3 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 channel.0         Norm
+## 4 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 channel.0         Norm
+## 5 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 channel.0         Norm
+## 6 161117_SILAC_HeLa_UPS1_TMT10_Mixture1_01 channel.0         Norm
+##   Condition Intensity
+## 1      Norm    970.35
+## 2      Norm    405.15
+## 3      Norm   2276.00
+## 4      Norm   1341.60
+## 5      Norm   1092.30
+## 6      Norm   2546.50</code></pre>
+</div>
+<div id="preliminary-check-3" class="section level3">
+<h3><span class="header-section-number">4.6.4</span> Preliminary check</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># total number of proteins</span>
+proteins &lt;-<span class="st"> </span><span class="kw">unique</span>(input.maxquant<span class="op">$</span>ProteinName)
+<span class="kw">length</span>(proteins)</code></pre>
+<pre><code>## [1] 33</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show the spiked-in proteins</span>
+proteins[<span class="kw">grepl</span>(<span class="st">&quot;ups&quot;</span>,proteins)]</code></pre>
+<pre><code>## [1] P62988ups P62937ups
+## 39 Levels: A1L0T0 O00625 O60427 P01127ups P01344ups P04183 ... Q9Y6C9</code></pre>
+</div>
+<div id="save-your-work-2" class="section level3">
+<h3><span class="header-section-number">4.6.5</span> Save your work</h3>
+<p>We can save the data that we made so far.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save</span>(input.maxquant, <span class="dt">file=</span><span class="st">&#39;data/data_MaxQuant_TMT/input.maxquant.rda&#39;</span>)</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="day-1-section-3-msstats-differential-abundance-and-sample-size-calculation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="day-2-section-5-msstatstmt-summarization-normalization-and-significance-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/MayInst_P6_day2_sec4.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
